@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { Refresh } from '@element-plus/icons-vue';
-import type { Tips } from './type';
+import LoadingButton from '@/components/LoadingButton.vue';
+import type { Tips, Photo } from './type';
 import { getRandomTips } from '@/apis/tips';
+import { getPhotoRandom } from '@/apis/photo';
 // 个人作品数据
 const projects = ref([
   {
@@ -30,6 +31,7 @@ const projects = ref([
     hasSourceLink: false,
   },
 ]);
+const heroImage = ref<Photo>();
 
 // 热搜数据
 const hotSearchList = ref<Tips[]>([]);
@@ -54,15 +56,18 @@ const getCurrentDate = () => {
 };
 
 const dateInfo = computed(() => getCurrentDate());
-
 // 刷新热搜
 const refreshHotSearch = async () => {
   const res = await getRandomTips(7);
   hotSearchList.value = res.data.sort((a: Tips, b: Tips) => a.priority - b.priority);
-  console.log(hotSearchList.value);
+};
+const getPhotoRandomData = async () => {
+  const res = await getPhotoRandom();
+  heroImage.value = res.data;
 };
 onMounted(() => {
   refreshHotSearch();
+  getPhotoRandomData();
 });
 </script>
 
@@ -72,7 +77,9 @@ onMounted(() => {
     <div class="hero-section">
       <div class="hero-image">
         <!-- 图片占位，实际使用时替换为真实图片 -->
-        <div class="hero-image-placeholder"></div>
+        <div class="hero-image-placeholder">
+          <img :src="heroImage?.url" alt="hero-image" />
+        </div>
         <div class="hero-overlay">
           <div class="hero-content">
             <h1 class="hero-weekday">{{ dateInfo.weekday }}</h1>
@@ -85,9 +92,7 @@ onMounted(() => {
       <div class="hot-search-section">
         <div class="hot-search-header">
           <h3 class="hot-search-title">每日小提示</h3>
-          <el-icon class="refresh-icon" @click="refreshHotSearch">
-            <Refresh />
-          </el-icon>
+          <LoadingButton @click="refreshHotSearch" />
         </div>
         <ul class="hot-search-list">
           <li v-for="(item, index) in hotSearchList" :key="item.id" class="hot-search-item">
@@ -155,10 +160,11 @@ onMounted(() => {
 .hero-image-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  background-image: url('https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1200&q=80');
-  background-size: cover;
-  background-position: center;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .hero-overlay {
@@ -167,7 +173,7 @@ onMounted(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+  // background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
   display: flex;
   align-items: flex-end;
   padding: 40px;
@@ -217,18 +223,6 @@ onMounted(() => {
   color: #333;
 }
 
-.refresh-icon {
-  font-size: 18px;
-  color: #666;
-  cursor: pointer;
-  transition: transform 0.3s;
-
-  &:hover {
-    color: #409eff;
-    transform: rotate(180deg);
-  }
-}
-
 .hot-search-list {
   list-style: none;
   padding: 0;
@@ -240,7 +234,7 @@ onMounted(() => {
   align-items: center;
   padding: 10px 0;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 
   &:hover {
     background-color: #f5f5f5;
