@@ -1,0 +1,27 @@
+// 全局 loading mask 样式，作用于 Element Plus 的 v-loading 指令
+// 这里不需要 :deep，直接写选择器即可
+
+// 修改 loading 文字的颜色（加 !important 覆盖 Element Plus 默认样式）
+.el-loading-spinner .el-loading-text {
+  color: $blogColor !important;
+}
+
+// 修改 loading 圆形 SVG 的描边颜色（circular 是 Element Plus 默认的圆形加载动画）
+.el-loading-spinner .circular {
+  stroke: $blogColor !important;
+}
+
+// 修改 loading 中所有 SVG 元素的颜色
+.el-loading-spinner svg {
+  color: $blogColor;
+}
+
+// 修改 loading SVG 中 path 元素的描边颜色（某些版本的 Element Plus 使用 path 绘制）
+.el-loading-spinner svg path {
+  stroke: $blogColor !important;
+}
+
+// 修改 loading SVG 中 circle 元素的描边颜色（某些版本的 Element Plus 使用 circle 绘制）
+.el-loading-spinner svg circle {
+  stroke: $blogColor !important;
+}

@@ -32,7 +32,7 @@ const projects = ref([
   },
 ]);
 const heroImage = ref<Photo>();
-
+const loading = ref(true);
 // 热搜数据
 const hotSearchList = ref<Tips[]>([]);
 // 获取当前日期信息
@@ -65,14 +65,20 @@ const getPhotoRandomData = async () => {
   const res = await getPhotoRandom();
   heroImage.value = res.data;
 };
-onMounted(() => {
-  refreshHotSearch();
-  getPhotoRandomData();
+onMounted(async () => {
+  await getPhotoRandomData();
+  await refreshHotSearch();
+  loading.value = false;
 });
 </script>
 
 <template>
-  <div class="home-container">
+  <div
+    class="home-container"
+    v-loading="loading"
+    element-loading-background="rgba(255, 255, 255, 1)"
+    element-loading-text="正在全力加载中..."
+  >
     <!-- 顶部英雄区域 -->
     <div class="hero-section">
       <div class="hero-image">
