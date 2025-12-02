@@ -31,8 +31,8 @@ const projects = ref([
     hasSourceLink: false,
   },
 ]);
-const heroImage = ref<Photo>();
 const loading = ref(true);
+const heroImage = ref<Photo>();
 // 热搜数据
 const hotSearchList = ref<Tips[]>([]);
 // 获取当前日期信息

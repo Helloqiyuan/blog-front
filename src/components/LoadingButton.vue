@@ -2,10 +2,10 @@
 import { onMounted, ref } from 'vue';
 const refreshIcon = ref<HTMLDivElement | null>(null);
 onMounted(() => {
-  let d = 180;
+  let d = 0;
   refreshIcon.value!.onclick = () => {
+    d += 360;
     refreshIcon.value!.style.transform = `rotate(${d}deg)`;
-    d += 180;
   };
 });
 </script>
@@ -23,11 +23,6 @@ onMounted(() => {
   cursor: pointer;
   background-image: url('../../../src/assets/loading.svg');
   background-size: cover;
-  transition: all 0.3s;
-
-  &:hover {
-    color: #409eff;
-    // transform: scale(1.5);
-  }
+  transition: all 0.5s;
 }
 </style>

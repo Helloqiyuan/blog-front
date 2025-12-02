@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import LayoutAside from './components/LayoutAside.vue';
 </script>
 
@@ -9,11 +9,9 @@ import LayoutAside from './components/LayoutAside.vue';
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .content {
   display: flex;
-  width: 100%;
-  height: 100vh;
   position: relative;
 
   &::before {
