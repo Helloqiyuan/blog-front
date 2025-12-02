@@ -10,7 +10,6 @@ import {
   Monitor,
   Camera,
 } from '@element-plus/icons-vue';
-
 const menuItems = [
   { id: 'home', label: '首页', icon: House },
   { id: 'article', label: '文章', icon: Document },
@@ -69,7 +68,7 @@ const menuItems = [
     height: 60px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url('../../../assets/images/avatar.png');
+    background-image: url('@/assets/images/avatar.png');
     background-position: center;
   }
 }

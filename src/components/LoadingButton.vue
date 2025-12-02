@@ -21,7 +21,7 @@ onMounted(() => {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  background-image: url('../../../src/assets/loading.svg');
+  background-image: url('@/assets/loading.svg');
   background-size: cover;
   transition: all 0.5s;
 }
