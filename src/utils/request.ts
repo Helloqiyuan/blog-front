@@ -4,6 +4,10 @@ import 'nprogress/nprogress.css';
 import { ref } from 'vue';
 import { gracefulNProgressDone } from './utils';
 
+NProgress.configure({
+  showSpinner: false,
+});
+
 const http = axios.create({
   baseURL: '/api',
   timeout: 10000,
