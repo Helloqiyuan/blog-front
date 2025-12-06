@@ -1,12 +1,7 @@
 import axios from 'axios';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+import NProgress from './nprogress';
 import { ref } from 'vue';
 import { gracefulNProgressDone } from './utils';
-
-NProgress.configure({
-  showSpinner: false,
-});
 
 const http = axios.create({
   baseURL: '/api',

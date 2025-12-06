@@ -9,6 +9,13 @@ export const uploadArticleApi = (article: Article): Promise<Result<string>> => {
     data: article,
   });
 };
+export const updateArticleApi = (article: Article): Promise<Result<string>> => {
+  return http({
+    url: '/article',
+    method: 'put',
+    data: article,
+  });
+};
 
 export const getArticleByIdApi = (id: number) => {
   return http({

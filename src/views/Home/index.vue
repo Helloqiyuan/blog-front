@@ -8,24 +8,27 @@ import { getPhotoRandom } from '@/apis/photo';
 const projects = ref([
   {
     id: 1,
-    title: '旧版博客',
-    description: '一个功能完善的博客,感谢支持Star。',
+    url: 'https://space.bilibili.com/478354407',
+    title: 'B站主页',
+    description: '初来B站，有点紧张赶紧拿出我珍藏了十年的作业写一下',
     icon: '🎀',
     iconColor: '#ff4757',
     hasSourceLink: true,
   },
   {
     id: 2,
-    title: '简约博客',
-    description: '一个简洁而又简单的博客,感谢支持Star。',
+    url: 'https://github.com/helloqiyuan',
+    title: 'github主页',
+    description: 'helloqiyuan的github主页',
     icon: '🌱',
     iconColor: '#2ed573',
     hasSourceLink: true,
   },
   {
     id: 3,
-    title: '博客小程序',
-    description: '本站的微信小程序博客版本,欢迎扫码体验。',
+    url: 'https://gitee.com/helloqiyuan',
+    title: 'gitee主页',
+    description: 'helloqiyuan的gitee主页',
     icon: '🎗️',
     iconColor: '#ffa502',
     hasSourceLink: false,
@@ -46,12 +49,12 @@ const getCurrentDate = () => {
   const day = now.getDate();
 
   // 这里简化处理，实际应该计算农历
-  const lunarInfo = '农历十月十一 乙巳年蛇';
+  // const lunarInfo = '农历十月十一 乙巳年蛇';
 
   return {
     weekday,
     date: `${year}年${month}月${day}日`,
-    lunar: lunarInfo,
+    // lunar: lunarInfo,
   };
 };
 
@@ -89,7 +92,7 @@ onMounted(async () => {
         <div class="hero-overlay">
           <div class="hero-content">
             <h1 class="hero-weekday">{{ dateInfo.weekday }}</h1>
-            <p class="hero-date">{{ dateInfo.date }} {{ dateInfo.lunar }}</p>
+            <p class="hero-date">{{ dateInfo.date }}</p>
           </div>
         </div>
       </div>
@@ -115,11 +118,17 @@ onMounted(async () => {
     <div class="projects-section">
       <div class="section-header">
         <div class="section-bar"></div>
-        <h2 class="section-title">一些无人问津的个人作品</h2>
+        <h2 class="section-title">关于作者</h2>
       </div>
 
       <div class="projects-list">
-        <div v-for="project in projects" :key="project.id" class="project-card">
+        <a
+          :href="project.url"
+          target="_blank"
+          v-for="project in projects"
+          :key="project.id"
+          class="project-card"
+        >
           <div class="project-icon" :style="{ color: project.iconColor }">
             {{ project.icon }}
           </div>
@@ -127,15 +136,15 @@ onMounted(async () => {
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
           </div>
-          <el-link
+          <!-- <el-link
             v-if="project.hasSourceLink"
             type="warning"
             class="source-link"
             :underline="false"
           >
             获取源码
-          </el-link>
-        </div>
+          </el-link> -->
+        </a>
       </div>
     </div>
   </div>
@@ -147,6 +156,7 @@ onMounted(async () => {
   min-height: 100%;
   padding: 20px;
   box-sizing: border-box;
+  background-color: $backColor;
 }
 
 .hero-section {
@@ -329,6 +339,7 @@ onMounted(async () => {
   transition:
     box-shadow 0.3s,
     transform 0.2s;
+  text-decoration: none;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);

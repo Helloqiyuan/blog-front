@@ -1,14 +1,6 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 <template>
-  <div class="content">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
 
-<style scoped>
-.content {
-  background-color: #fafafc;
-}
-</style>
+<style scoped></style>

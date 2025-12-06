@@ -8,6 +8,7 @@ const getArticleList = async () => {
   const res = await getArticleListApi(1, 20);
   articleList.value = res.data.rows;
 };
+const loading = ref(true);
 
 const formatDate = (date: Date | string | undefined) => {
   if (!date) return '';
@@ -26,16 +27,23 @@ const formatDate = (date: Date | string | undefined) => {
   }
 };
 
-onMounted(() => {
-  getArticleList();
+onMounted(async () => {
+  await getArticleList();
+  loading.value = false;
 });
 </script>
 <template>
-  <div class="article-content">
+  <div
+    class="article-content"
+    v-loading="loading"
+    element-loading-background="rgba(255, 255, 255, 1)"
+    element-loading-text="正在全力加载中..."
+  >
     <div class="note-list">
       <RouterLink
         :to="`/articleDetail?id=${item.id}`"
         class="note-item"
+        target="_blank"
         v-for="item in articleList"
         :key="item.id"
       >
@@ -62,7 +70,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .article-content {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 20px;
   background-color: #f5f5f5;
 }
