@@ -11,9 +11,9 @@ import {
   Camera,
 } from '@element-plus/icons-vue';
 const menuItems = [
-  { id: 'home', label: '首页', icon: House },
+  { id: '', label: '首页', icon: House },
   { id: 'article', label: '文章', icon: Document },
-  { id: 'note', label: '随笔', icon: EditPen },
+  { id: 'note', label: '随笔(暂时拿来编辑文章)', icon: EditPen },
   { id: 'comment', label: '留言', icon: ChatDotRound },
   { id: 'friendlink', label: '友链', icon: Link },
   { id: 'subscribe', label: '订阅', icon: Connection },
@@ -41,7 +41,9 @@ const menuItems = [
 
     <!-- 底部信息 -->
     <footer class="aside-footer">
-      <el-link type="info" class="footer-item">赣ICP备2025077425号</el-link>
+      <el-link href="https://beian.miit.gov.cn/" target="_blank" type="info" class="footer-item"
+        >赣ICP备2025077425号</el-link
+      >
     </footer>
   </aside>
 </template>

@@ -19,6 +19,12 @@ const router = createRouter({
           component: () => import('@/views/Article/index.vue'),
         },
         {
+          path: 'articleDetail',
+          name: 'articledetail',
+          component: () => import('@/views/Article/ArticleDetail/index.vue'),
+          props: (route) => ({ id: Number(route.query.id) }),
+        },
+        {
           path: 'note',
           name: 'note',
           component: () => import('@/views/Note/index.vue'),

@@ -16,6 +16,8 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.13.2",
     "element-plus": "^2.11.9",
     "nprogress": "^0.2.0",

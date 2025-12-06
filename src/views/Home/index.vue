@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import LoadingButton from '@/components/LoadingButton.vue';
-import type { Tips, Photo } from './type';
+import type { Tips, Photo } from './types';
 import { getRandomTips } from '@/apis/tips';
 import { getPhotoRandom } from '@/apis/photo';
 // 个人作品数据
@@ -94,7 +94,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- 右侧热搜区域 -->
+      <!-- 右侧每日小提示区域 -->
       <div class="hot-search-section">
         <div class="hot-search-header">
           <h3 class="hot-search-title">每日小提示</h3>
