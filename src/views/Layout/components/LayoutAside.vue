@@ -54,6 +54,7 @@ const menuItems = [
   height: 100vh;
   background: #fff;
   display: flex;
+  border-right: 1px solid #ccc;
   flex-direction: column;
   align-items: center;
   padding: 20px 0 0 0;

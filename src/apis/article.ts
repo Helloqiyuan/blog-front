@@ -1,6 +1,7 @@
 import type { Result } from '@/types/Result';
 import http from '@/utils/request';
 import type { Article } from '@/views/Note/types';
+import type { PageQuery } from '@/views/Article/types';
 
 export const uploadArticleApi = (article: Article): Promise<Result<string>> => {
   return http({
@@ -22,12 +23,9 @@ export const getArticleByIdApi = (id: number) => {
     url: `/article?id=${id}`,
   });
 };
-export const getArticleListApi = (page: number, pageSize: number) => {
+export const getArticleListApi = (pageQuery: PageQuery) => {
   return http({
     url: '/article/page',
-    params: {
-      page,
-      pageSize,
-    },
+    params: pageQuery,
   });
 };

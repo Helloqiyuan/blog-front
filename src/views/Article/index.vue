@@ -1,37 +1,49 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getArticleListApi } from '@/apis/article';
 import type { Article } from '@/views/Note/types/index';
 import { View } from '@element-plus/icons-vue';
+import { formatDate } from '@/utils/utils';
+import type { PageQuery } from '@/views/Article/types/index';
 const articleList = ref<Article[]>([]);
+const searchForm = ref<PageQuery>({
+  page: 1,
+  pageSize: 10,
+  searchContent: '',
+});
 const getArticleList = async () => {
-  const res = await getArticleListApi(1, 20);
+  const res = await getArticleListApi(searchForm.value);
   articleList.value = res.data.rows;
 };
-const loading = ref(true);
-
-const formatDate = (date: Date | string | undefined) => {
-  if (!date) return '';
-  const d = new Date(date);
-  const now = new Date();
-  const diff = now.getTime() - d.getTime();
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const months = Math.floor(days / 30);
-
-  if (months > 0) {
-    return `${months}个月前`;
-  } else if (days > 0) {
-    return `${days}天前`;
-  } else {
-    return '今天';
+const loading = ref(false);
+const sortType = ref(-1);
+watch(sortType, (newValue) => {
+  if (sortType.value === -1) {
+    return;
   }
-};
+  loading.value = true;
+  if (newValue === 0) {
+    articleList.value.sort((a: Article, b: Article) => {
+      if (!a.viewCount || !b.viewCount) return 0;
+      return b.viewCount - a.viewCount;
+    });
+  } else {
+    articleList.value.sort((a: Article, b: Article) => {
+      if (!a.createTime || !b.createTime) return 0;
+      return new Date(b.createTime).getTime() - new Date(a.createTime).getTime();
+    });
+  }
+  loading.value = false;
+});
 
 onMounted(async () => {
+  loading.value = true;
   await getArticleList();
+  sortType.value = 0;
   loading.value = false;
 });
 </script>
+
 <template>
   <div
     class="article-content"
@@ -39,6 +51,22 @@ onMounted(async () => {
     element-loading-background="rgba(255, 255, 255, 1)"
     element-loading-text="正在全力加载中..."
   >
+    <div class="function">
+      <el-radio-group v-model="sortType">
+        <el-radio :value="0">最多点击</el-radio>
+        <el-radio :value="1">最新发布</el-radio>
+      </el-radio-group>
+      <el-input
+        v-model="searchForm.searchContent"
+        style="width: 240px; margin-left: auto"
+        placeholder="搜索关键词"
+        @keydown.enter="getArticleList"
+        clearable
+      />
+      <el-button style="margin: 0 16px 0 8px" plain type="primary" @click="getArticleList"
+        >搜索</el-button
+      >
+    </div>
     <div class="note-list">
       <RouterLink
         :to="`/articleDetail?id=${item.id}`"
@@ -61,6 +89,9 @@ onMounted(async () => {
           <span class="note-meta" v-if="item.createTime">
             {{ formatDate(item.createTime) }}
           </span>
+          <span class="note-meta" v-if="item.updateTime">
+            上次修改时间：{{ formatDate(item.updateTime) }}
+          </span>
         </div>
       </RouterLink>
     </div>
@@ -69,32 +100,45 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .article-content {
+  position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: max-content;
   padding: 20px;
   background-color: #f5f5f5;
 }
-
+.function {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: $boxColor;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
 .note-list {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
   justify-content: flex-start;
-  max-width: 1280px;
   margin: 0 auto;
 }
 
 .note-item {
   display: flex;
   flex-direction: column;
-  flex: 0 0 calc(50% - 12px);
+  width: calc(50% - 12px);
   min-height: 280px;
   background-color: #ffffff;
   border-radius: 12px;
   border: 1px solid #e8e8e8;
   padding: 24px;
   text-decoration: none;
-  color: inherit;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   cursor: pointer;

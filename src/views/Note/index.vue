@@ -139,7 +139,7 @@ onBeforeUnmount(() => {
         placeholder="请输入文章副标题"
       />
       <!-- <Upload :id="``"/> -->
-      <el-button class="button" type="primary" @click="saveOrEdit">{{
+      <el-button plain class="button" type="primary" @click="saveOrEdit">{{
         isEdit ? '提交修改' : '提交文章'
       }}</el-button>
     </div>
@@ -151,7 +151,13 @@ onBeforeUnmount(() => {
         :mode="mode"
       />
       <Editor
-        style="height: 500px; overflow-y: hidden; border: 1px solid #ccc; border-top: none"
+        style="
+          height: 100%;
+          min-height: 500px;
+          overflow-y: hidden;
+          border: 1px solid #ccc;
+          border-top: none;
+        "
         v-model="form.content"
         :defaultConfig="editorConfig"
         :mode="mode"
@@ -164,6 +170,8 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .content {
   display: flex;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
   padding: 20px;
 }
@@ -185,6 +193,7 @@ onBeforeUnmount(() => {
   margin-left: auto;
 }
 .editor {
+  height: calc(100vh - 200px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 </style>

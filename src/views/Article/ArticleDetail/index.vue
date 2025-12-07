@@ -24,6 +24,7 @@ const getArticle = async (id: number) => {
   }
 };
 const handleEdit = () => {
+  // ElMessage.warning('没有权限');
   goTo('/note?id=' + article.value.id);
 };
 
@@ -68,8 +69,8 @@ onMounted(() => {
         <h1 class="detail-title">
           {{ article.title }}
           <div class="btns">
-            <el-button @click="handleDel" type="danger">删除</el-button>
-            <el-button type="primary" @click="handleEdit">编辑</el-button>
+            <el-button plain @click="handleDel" type="danger">删除</el-button>
+            <el-button plain type="primary" @click="handleEdit">编辑</el-button>
           </div>
         </h1>
         <p class="detail-subtitle">{{ article.subTitle }}</p>
@@ -97,7 +98,6 @@ onMounted(() => {
 }
 
 .detail-card {
-  max-width: 1200px;
   margin: 0 auto;
   background-color: #ffffff;
   border-radius: 12px;
