@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import LoadingButton from '@/components/LoadingButton.vue';
-import type { Tips, Photo } from './types';
-import { getRandomTips } from '@/apis/tips';
-import { getPhotoRandom } from '@/apis/photo';
+import type { Tips } from '@/apis/TipsService/types';
+import type { Photo } from '@/apis/PhotoService/types';
+import { getRandomTips } from '@/apis/TipsService';
+import { getPhotoRandom } from '@/apis/PhotoService';
 // 个人作品数据
 const projects = ref([
   {

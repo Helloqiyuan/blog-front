@@ -11,14 +11,14 @@ import {
   Camera,
 } from '@element-plus/icons-vue';
 const menuItems = [
-  { id: '', label: '首页', icon: House },
-  { id: 'article', label: '文章', icon: Document },
-  { id: 'note', label: '随笔', icon: EditPen },
-  { id: 'comment', label: '留言', icon: ChatDotRound },
-  { id: 'friendlink', label: '友链', icon: Link },
-  { id: 'subscribe', label: '订阅', icon: Connection },
-  { id: 'about', label: '关于', icon: Monitor },
-  { id: 'more', label: '更多', icon: Camera },
+  { id: '', label: '欢迎回来', icon: House },
+  { id: '/article', label: '文章管理', icon: Document },
+  { id: '/note', label: '随笔管理', icon: EditPen },
+  { id: '/comment', label: '留言管理', icon: ChatDotRound },
+  { id: '/friendlink', label: '友链管理', icon: Link },
+  { id: '/subscribe', label: '订阅管理', icon: Connection },
+  { id: '/about', label: '关于', icon: Monitor },
+  { id: '/more', label: '更多', icon: Camera },
 ];
 </script>
 
@@ -31,7 +31,12 @@ const menuItems = [
 
     <!-- 导航菜单 -->
     <nav class="nav-menu">
-      <RouterLink :to="`/${item.id}`" v-for="item in menuItems" :key="item.id" class="nav-item">
+      <RouterLink
+        :to="`/dashboard${item.id}`"
+        v-for="item in menuItems"
+        :key="item.id"
+        class="nav-item"
+      >
         <el-icon class="nav-icon">
           <component :is="item.icon" />
         </el-icon>

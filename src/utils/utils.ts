@@ -1,7 +1,7 @@
 import NProgress from 'nprogress';
 import type { Ref } from 'vue';
 import router from '@/router';
-
+import dayjs from '@/utils/dayjs';
 export const gracefulNProgressDone = (requestCount: Ref<number>) => {
   setTimeout(() => {
     if (requestCount.value === 0) {
@@ -13,9 +13,13 @@ export const gracefulNProgressDone = (requestCount: Ref<number>) => {
 export const goTo = (path: string) => {
   router.push(path);
 };
-
-export const formatDate = (date: Date | string) => {
-  if (!date) return '';
+/**
+ * 距离当前的时间
+ * @param date
+ * @returns
+ */
+export const DistantFromNowAndDate = (date: Date | string) => {
+  /*   if (!date) return '';
   const last = new Date(date);
   const now = new Date();
   if (last > now) {
@@ -33,5 +37,7 @@ export const formatDate = (date: Date | string) => {
     return now.getMinutes() - last.getMinutes() + '分钟前';
   } else {
     return '刚刚';
-  }
+  } */
+  //  使用 dayjs 处理时间格式化
+  return dayjs(date).fromNow();
 };

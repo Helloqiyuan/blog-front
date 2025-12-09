@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from 'vue';
-import { getArticleListApi } from '@/apis/article';
-import type { Article } from '@/views/Note/types/index';
+import { getArticleListApi } from '@/apis/ArticleService';
+import type { Article } from '@/apis/ArticleService/types';
 import { View } from '@element-plus/icons-vue';
-import { formatDate } from '@/utils/utils';
-import type { PageQuery } from '@/views/Article/types/index';
+import { DistantFromNowAndDate } from '@/utils/utils';
+import type { PageQuery } from '@/apis/ArticleService/types/index';
+import dayjs from 'dayjs';
 const articleList = ref<Article[]>([]);
 const searchForm = ref<PageQuery>({
   page: 1,
@@ -18,16 +19,11 @@ const getArticleList = async () => {
 const loading = ref(false);
 const sortType = ref(-1);
 watch(sortType, (newValue) => {
-  console.log(newValue);
-  console.log(articleList.value);
-
   if (sortType.value === -1) {
     return;
   }
   loading.value = true;
   if (newValue === 0) {
-    console.log('排序');
-
     articleList.value.sort((a: Article, b: Article) => {
       return (b.viewCount as number) - (a.viewCount as number);
     });
@@ -82,7 +78,7 @@ onMounted(async () => {
     </div>
     <div class="note-list">
       <RouterLink
-        :to="`/articleDetail?id=${item.id}`"
+        :to="`/article/detail?id=${item.id}`"
         class="note-item"
         target="_blank"
         v-for="item in articleList"
@@ -101,10 +97,10 @@ onMounted(async () => {
             {{ item.viewCount }}
           </span>
           <span class="note-meta" v-if="item.createTime">
-            {{ formatDate(item.createTime) }}
+            {{ DistantFromNowAndDate(item.createTime) }}
           </span>
           <span class="note-meta" v-if="item.updateTime">
-            上次修改时间：{{ formatDate(item.updateTime) }}
+            上次修改时间：{{ DistantFromNowAndDate(item.updateTime) }}
           </span>
         </div>
       </RouterLink>

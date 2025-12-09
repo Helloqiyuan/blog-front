@@ -1,58 +1,27 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { getArticleByIdApi } from '@/apis/article';
-import type { Article } from '@/views/Note/types/index';
+import { getArticleByIdApi } from '@/apis/ArticleService';
+import type { Article } from '@/apis/ArticleService/types';
 import { View } from '@element-plus/icons-vue';
 import dayjs from '@/utils/dayjs';
-import { goTo } from '@/utils/utils';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessage } from 'element-plus';
 const props = defineProps<{
-  id: number;
+  id: string;
 }>();
 
 const article = ref<Article>({
   title: '',
   subTitle: '',
+  cover: '',
   content: '',
 });
 
-const getArticle = async (id: number) => {
+const getArticle = async (id: string) => {
   console.log('getArticle', id);
   const res = await getArticleByIdApi(id);
   if (res.data) {
     article.value = res.data;
   }
-};
-const handleEdit = () => {
-  // ElMessage.warning('没有权限');
-  goTo('/note?id=' + article.value.id);
-};
-
-const handleDel = () => {
-  ElMessageBox.confirm('确认删除？', '警告', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-  })
-    .then(
-      //   () => {
-      //   ElMessage({
-      //     type: 'success',
-      //     message: '删除成功',
-      //   });
-      // }
-      () => {
-        throw new Error('没有权限');
-      },
-    )
-    .catch((e) => {
-      if (e.message) {
-        ElMessage({
-          type: 'error',
-          message: e.message,
-        });
-      }
-    });
 };
 onMounted(() => {
   if (props.id) {
@@ -68,10 +37,6 @@ onMounted(() => {
       <div class="detail-header">
         <h1 class="detail-title">
           {{ article.title }}
-          <div class="btns">
-            <el-button plain @click="handleDel" type="danger">删除</el-button>
-            <el-button plain type="primary" @click="handleEdit">编辑</el-button>
-          </div>
         </h1>
         <p class="detail-subtitle">{{ article.subTitle }}</p>
         <div class="detail-meta" v-if="article.viewCount || article.createTime">

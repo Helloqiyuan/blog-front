@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>随笔</h1>
+  <h1>更多</h1>
 </template>
 
 <style scoped lang="scss"></style>

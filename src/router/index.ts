@@ -25,7 +25,7 @@ const router = createRouter({
           },
         },
         {
-          path: 'articleDetail',
+          path: 'article/detail',
           name: 'articledetail',
           component: () => import('@/views/Article/ArticleDetail/index.vue'),
           props: (route) => ({ id: Number(route.query.id) }),
@@ -81,8 +81,97 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/login',
+      name: 'logn',
+      component: () => import('@/views/Manager/Login/index.vue'),
+      meta: {
+        title: '登录',
+      },
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/Manager/Dashboard/index.vue'),
+      children: [
+        {
+          path: '',
+          name: 'dashboard-home',
+          component: () => import('@/views/Manager/Home/index.vue'),
+          meta: {
+            title: '管理后台',
+          },
+        },
+        {
+          path: 'article',
+          name: 'dashboard-article',
+          component: () => import('@/views/Manager/Article/index.vue'),
+          meta: {
+            title: '文章管理',
+          },
+        },
+        {
+          path: 'article/edit',
+          name: 'dashboard-article-edit',
+          component: () => import('@/views/Manager/Article/components/Editor.vue'),
+          meta: {
+            title: '处理文章',
+          },
+          props: (route) => ({ id: route.query.id }),
+        },
+        {
+          path: 'note',
+          name: 'dashboard-note',
+          component: () => import('@/views/Manager/Note/index.vue'),
+          meta: {
+            title: '随笔管理',
+          },
+        },
+        {
+          path: 'comment',
+          name: 'dashboard-comment',
+          component: () => import('@/views/Manager/Comment/index.vue'),
+          meta: {
+            title: '留言管理',
+          },
+        },
+        {
+          path: 'friendlink',
+          name: 'dashboard-friendlink',
+          component: () => import('@/views/Manager/FriendLink/index.vue'),
+          meta: {
+            title: '友链管理',
+          },
+        },
+        {
+          path: 'subscribe',
+          name: 'dashboard-subscribe',
+          component: () => import('@/views/Manager/Subscribe/index.vue'),
+          meta: {
+            title: '订阅管理',
+          },
+        },
+        {
+          path: 'about',
+          name: 'dashboard-about',
+          component: () => import('@/views/Manager/About/index.vue'),
+          meta: {
+            title: '关于管理',
+          },
+        },
+        {
+          path: 'more',
+          name: 'dashboard-more',
+          component: () => import('@/views/Manager/More/index.vue'),
+          meta: {
+            title: '更多管理',
+          },
+        },
+      ],
+    },
   ],
 });
+// 使meta生效
 router.afterEach((to) => {
   if (to.meta?.title) {
     document.title = to.meta.title as string;
