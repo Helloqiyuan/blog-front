@@ -1,60 +1,102 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
-
-import type { UploadProps, UploadUserFile } from 'element-plus';
-const props = defineProps<{
-  acontent: string;
-}>();
-
-const fileList = ref<UploadUserFile[]>([]);
-
-const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
-  console.log(file, uploadFiles);
-};
-
-const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
-  console.log(uploadFile);
-};
-
-const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
-  ElMessage.warning(
-    `The limit is 1, you selected ${files.length} files this time, add up to ${
-      files.length + uploadFiles.length
-    } totally`,
-  );
-};
-
-const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
-  return ElMessageBox.confirm(`Cancel the transfer of ${uploadFile.name} ?`).then(
-    () => true,
-    () => false,
-  );
-};
-const handleSucceed: UploadProps['onSuccess'] = (res, file, fileList) => {
-  console.log('Success', res, file, fileList);
-};
-</script>
-
 <template>
   <el-upload
-    v-model:file-list="fileList"
-    class="upload-demo dark"
-    action="http://localhost:8080/upload"
-    multiple
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :before-remove="beforeRemove"
-    :limit="1"
-    :on-exceed="handleExceed"
-    :on-success="handleSucceed"
+    class="avatar-uploader"
+    action="/api/upload"
+    drag
+    :show-file-list="false"
+    :on-success="handleAvatarSuccess"
+    :on-error="handleAvatarError"
+    :before-upload="beforeAvatarUpload"
+    v-loading="uploading"
+    element-loading-background="rgba(255, 255, 255, 1)"
+    element-loading-text="正在上传中..."
   >
-    <el-button type="primary"> </el-button>
+    <img v-if="url" :src="url" class="avatar" />
+    <el-icon v-else class="avatar-uploader-icon">
+      <Plus />
+      <el-text class="mx-1">点击上传或<strong>拖拽</strong>到此处上传</el-text>
+    </el-icon>
   </el-upload>
 </template>
 
-<style scoped lang="scss">
-.margin-top {
-  margin-top: 20px;
+<script lang="ts" setup>
+import { ref, toRef } from 'vue';
+import { ElMessage } from 'element-plus';
+import { Plus } from '@element-plus/icons-vue';
+
+import type { UploadProps } from 'element-plus';
+const props = defineProps(['url']);
+const emit = defineEmits(['transURL']);
+const uploading = ref(false);
+
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
+  console.log('success', response, uploadFile);
+  emit('transURL', response.data);
+  uploading.value = false;
+};
+const handleAvatarError: UploadProps['onError'] = (err, uploadFile) => {
+  console.log('error', err, uploadFile);
+  emit('transURL', '');
+  uploading.value = false;
+  ElMessage.error('上传失败');
+};
+
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  uploading.value = true;
+  console.log('rawFile', rawFile);
+
+  if (!rawFile.type.startsWith('image/')) {
+    ElMessage.error('只能上传图片!');
+    uploading.value = false;
+    return false;
+  } else if (rawFile.size / 1024 / 1024 > 20) {
+    ElMessage.error('图片大小不能超过 20MB!');
+    uploading.value = false;
+    return false;
+  }
+  return true;
+};
+</script>
+
+<style scoped>
+.avatar-uploader .avatar {
+  width: 100%;
+  max-height: 300px;
+  display: block;
+  object-fit: contain;
+}
+.avatar-uploader-icon {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  strong {
+    color: #ff9bb0;
+  }
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload-dragger {
+  padding: 0;
+}
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
 }
 </style>

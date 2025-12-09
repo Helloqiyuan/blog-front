@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 import { getArticleListApi } from '@/apis/article';
 import type { Article } from '@/views/Note/types/index';
 import { View } from '@element-plus/icons-vue';
@@ -8,7 +8,7 @@ import type { PageQuery } from '@/views/Article/types/index';
 const articleList = ref<Article[]>([]);
 const searchForm = ref<PageQuery>({
   page: 1,
-  pageSize: 10,
+  pageSize: 100,
   searchContent: '',
 });
 const getArticleList = async () => {
@@ -18,19 +18,30 @@ const getArticleList = async () => {
 const loading = ref(false);
 const sortType = ref(-1);
 watch(sortType, (newValue) => {
+  console.log(newValue);
+  console.log(articleList.value);
+
   if (sortType.value === -1) {
     return;
   }
   loading.value = true;
   if (newValue === 0) {
+    console.log('排序');
+
     articleList.value.sort((a: Article, b: Article) => {
-      if (!a.viewCount || !b.viewCount) return 0;
-      return b.viewCount - a.viewCount;
+      return (b.viewCount as number) - (a.viewCount as number);
+    });
+  } else if (newValue === 1) {
+    articleList.value.sort((a: Article, b: Article) => {
+      return (
+        new Date(b.createTime as string).getTime() - new Date(a.createTime as string).getTime()
+      );
     });
   } else {
     articleList.value.sort((a: Article, b: Article) => {
-      if (!a.createTime || !b.createTime) return 0;
-      return new Date(b.createTime).getTime() - new Date(a.createTime).getTime();
+      return (
+        new Date(b.updateTime as string).getTime() - new Date(a.updateTime as string).getTime()
+      );
     });
   }
   loading.value = false;
@@ -39,6 +50,7 @@ watch(sortType, (newValue) => {
 onMounted(async () => {
   loading.value = true;
   await getArticleList();
+  await nextTick();
   sortType.value = 0;
   loading.value = false;
 });
@@ -55,6 +67,7 @@ onMounted(async () => {
       <el-radio-group v-model="sortType">
         <el-radio :value="0">最多点击</el-radio>
         <el-radio :value="1">最新发布</el-radio>
+        <el-radio :value="2">最新修改</el-radio>
       </el-radio-group>
       <el-input
         v-model="searchForm.searchContent"
@@ -80,6 +93,7 @@ onMounted(async () => {
         </div>
         <div class="note-body">
           <p class="note-content">{{ item.subTitle }}</p>
+          <img class="note-cover" v-if="item.cover" :src="item.cover" alt="" />
         </div>
         <div class="note-footer" v-if="item.viewCount || item.createTime">
           <span class="note-meta" v-if="item.viewCount">
@@ -173,7 +187,9 @@ onMounted(async () => {
   }
 
   .note-body {
+    display: flex;
     flex: 1;
+    justify-content: space-between;
     margin-bottom: 16px;
   }
 
@@ -188,6 +204,12 @@ onMounted(async () => {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .note-cover {
+    width: 250px;
+    height: 250px;
+    border: 1px solid #ccc;
+    object-fit: cover;
   }
 
   .note-footer {

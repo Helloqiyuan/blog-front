@@ -5,12 +5,13 @@ export interface Article {
   id?: number;
   title: string;
   subTitle: string;
+  cover: string;
   content: string;
   authorId?: number;
   status?: number;
   viewCount?: number;
-  updateTime?: Date;
-  createTime?: Date;
+  updateTime?: string;
+  createTime?: string;
 }
 /* 富文本编辑器中的图片元素 */
 type ImageElement = SlateElement & {

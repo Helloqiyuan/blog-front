@@ -14,7 +14,7 @@ export const goTo = (path: string) => {
   router.push(path);
 };
 
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | string) => {
   if (!date) return '';
   const last = new Date(date);
   const now = new Date();
