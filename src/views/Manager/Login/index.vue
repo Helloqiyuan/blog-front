@@ -24,17 +24,18 @@ const handleLogin = () => {
       loading.value = true;
       try {
         // 模拟登录请求
+        // debugger;
         const res = await LoginApi(form.value);
-        if (res.data.token) {
+        if (res.data?.token) {
           localStorage.setItem('adminToken', res.data.token);
           ElMessage.success('登录成功');
-          adminStore.router.push('/dashboard');
+          adminStore.setAdminInfo(res.data);
+          router.push('/dashboard');
         } else {
-          ElMessage.error('登录失败' + res.message);
-          return;
+          ElMessage.error(res.message);
         }
-      } catch (error) {
-        ElMessage.error('登陆异常' + error);
+      } catch (e) {
+        ElMessage.error('登录异常' + e);
       } finally {
         loading.value = false;
       }
@@ -61,6 +62,7 @@ const handleLogin = () => {
               placeholder="请输入账号"
               :prefix-icon="User"
               clearable
+              @keydown.enter="handleLogin"
             />
           </el-form-item>
 
@@ -73,6 +75,7 @@ const handleLogin = () => {
               :prefix-icon="Lock"
               show-password
               clearable
+              @keydown.enter="handleLogin"
             />
           </el-form-item>
 
@@ -80,7 +83,6 @@ const handleLogin = () => {
           <el-form-item>
             <el-button
               type="primary"
-              native-type="submit"
               class="login-button"
               :loading="loading"
               @click="handleLogin"

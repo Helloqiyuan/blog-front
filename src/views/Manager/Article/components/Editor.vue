@@ -11,7 +11,7 @@ import { ElMessage } from 'element-plus';
 import Upload from '@/components/Upload.vue';
 import router from '@/router';
 const props = defineProps<{
-  id: string;
+  id?: string;
 }>();
 const isEdit = ref(false);
 // 编辑器实例，必须用 shallowRef

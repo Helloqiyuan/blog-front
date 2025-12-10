@@ -8,9 +8,17 @@ const useAdminStore = defineStore(
     const getAdminInfo = () => {
       return adminInfo.value;
     };
+    const setAdminInfo = (info: LoginVO) => {
+      adminInfo.value = info;
+    };
+    const clearAdminInfo = () => {
+      adminInfo.value = null;
+    };
     return {
       adminInfo,
+      setAdminInfo,
       getAdminInfo,
+      clearAdminInfo,
     };
   },
   {

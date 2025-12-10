@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import useAdminStore from '@/stores/admin.ts';
+import { ElMessage } from 'element-plus';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -171,11 +172,21 @@ const router = createRouter({
     },
   ],
 });
-// 使meta生效
-router.afterEach((to) => {
+router.beforeEach((to) => {
   if (to.meta?.title) {
     document.title = to.meta.title as string;
   }
+
+  const adminStore = useAdminStore();
+
+  if (!to.fullPath.startsWith('/dashboard')) {
+    return true;
+  }
+  if (!adminStore.getAdminInfo() || !adminStore.getAdminInfo()?.token) {
+    ElMessage.warning('token失效，请重新登录');
+    return '/login';
+  }
+  return true;
 });
 
 export default router;
