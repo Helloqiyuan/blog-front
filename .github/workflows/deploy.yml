@@ -1,0 +1,42 @@
+name: Deploy to Linux Nginx
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Clear old files
+        run: |
+          DIST="/opt/1panel/apps/openresty/openresty/www/sites/yuanshen.icu/index/dist"
+          if [ -d "$DIST" ]; then
+            rm -rf "$DIST"/*
+          else
+            mkdir -p "$DIST"
+          fi
+
+      - name: Copy build files to Nginx
+        run: |
+          DIST="/opt/1panel/apps/openresty/openresty/www/sites/yuanshen.icu/index/dist"
+          # 确保目录存在
+          mkdir -p "$DIST"
+          # 拷贝 dist 目录下所有文件到目标目录
+          cp -r dist/* "$DIST/"
