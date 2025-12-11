@@ -42,6 +42,12 @@ const menuItems = [
         </el-icon>
         <span class="nav-label">{{ item.label }}</span>
       </RouterLink>
+      <RouterLink to="/" class="nav-item">
+        <el-icon class="nav-icon">
+          <component :is="House" />
+        </el-icon>
+        <span class="nav-label">主页</span>
+      </RouterLink>
     </nav>
 
     <!-- 底部信息 -->

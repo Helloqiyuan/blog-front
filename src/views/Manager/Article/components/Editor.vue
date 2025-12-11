@@ -11,7 +11,7 @@ import { ElMessage } from 'element-plus';
 import Upload from '@/components/Upload.vue';
 import router from '@/router';
 const props = defineProps<{
-  id?: string;
+  id?: number;
 }>();
 const isEdit = ref(false);
 // 编辑器实例，必须用 shallowRef
@@ -180,7 +180,7 @@ onBeforeUnmount(() => {
     </div>
   </div>
   <el-dialog v-model="dialogVisible" title="信息完善" width="500" class="dialog">
-    <span>{{ isEdit ? '修改封面' : '上传封面' }}</span>
+    <span>{{ isEdit ? '修改封面' : '上传封面' }}(可选)</span>
     <Upload :url="form.cover" @transURL="handleTransURL" />
     <template #footer>
       <div class="dialog-footer">

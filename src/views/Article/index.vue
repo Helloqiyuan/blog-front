@@ -18,16 +18,16 @@ const getArticleList = async () => {
 };
 const loading = ref(false);
 const sortType = ref(-1);
-watch(sortType, (newValue) => {
+watch([sortType, articleList], ([newSortType, newArticleList]) => {
   if (sortType.value === -1) {
     return;
   }
   loading.value = true;
-  if (newValue === 0) {
+  if (newSortType === 0) {
     articleList.value.sort((a: Article, b: Article) => {
       return (b.viewCount as number) - (a.viewCount as number);
     });
-  } else if (newValue === 1) {
+  } else if (newSortType === 1) {
     articleList.value.sort((a: Article, b: Article) => {
       return (
         new Date(b.createTime as string).getTime() - new Date(a.createTime as string).getTime()
@@ -46,7 +46,6 @@ watch(sortType, (newValue) => {
 onMounted(async () => {
   loading.value = true;
   await getArticleList();
-  await nextTick();
   sortType.value = 0;
   loading.value = false;
 });

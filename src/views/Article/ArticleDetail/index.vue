@@ -6,7 +6,7 @@ import { View } from '@element-plus/icons-vue';
 import dayjs from '@/utils/dayjs';
 import { ElMessage } from 'element-plus';
 const props = defineProps<{
-  id: string;
+  id: number;
 }>();
 
 const article = ref<Article>({
@@ -16,7 +16,7 @@ const article = ref<Article>({
   content: '',
 });
 
-const getArticle = async (id: string) => {
+const getArticle = async (id: number) => {
   console.log('getArticle', id);
   const res = await getArticleByIdApi(id);
   if (res.data) {

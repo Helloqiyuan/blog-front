@@ -9,6 +9,7 @@ import {
   Connection,
   Monitor,
   Camera,
+  User,
 } from '@element-plus/icons-vue';
 const menuItems = [
   { id: '', label: '首页', icon: House },
@@ -19,6 +20,7 @@ const menuItems = [
   { id: 'subscribe', label: '订阅', icon: Connection },
   { id: 'about', label: '关于', icon: Monitor },
   { id: 'more', label: '更多', icon: Camera },
+  { id: 'dashboard', label: '登录', icon: User },
 ];
 </script>
 

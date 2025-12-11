@@ -1,18 +1,22 @@
 import axios from 'axios';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import NProgress from './nprogress';
 import { ref } from 'vue';
 import { gracefulNProgressDone } from './utils';
+import type { Result } from '@/apis/types/Result';
 import useAdminStore from '@/stores/admin';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
-const http = axios.create({
+const Instance: AxiosInstance = axios.create({
   baseURL: '/api',
   timeout: 60000,
 });
 const requestCount = ref<number>(0);
 const adminStore = useAdminStore();
-http.interceptors.request.use(
+Instance.interceptors.request.use(
   (config) => {
+    console.log('请求地址:', config.url);
+
     const token = adminStore.getAdminInfo()?.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -30,14 +34,15 @@ http.interceptors.request.use(
   },
 );
 
-http.interceptors.response.use(
-  (response) => {
+Instance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log('请求结果:', response.data);
     requestCount.value--;
     gracefulNProgressDone(requestCount);
     return response.data;
   },
   function (error) {
-    console.warn('http.interceptors.response:' + error);
+    console.log('请求结果:', error);
     if (error.status === 401) {
       ElMessage.warning('登录已过期，请重新登录');
       router.replace({ path: '/login' });
@@ -47,4 +52,7 @@ http.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+const http = <T>(config: AxiosRequestConfig): Promise<Result<T>> => {
+  return Instance(config) as Promise<Result<T>>;
+};
 export default http;
