@@ -12,11 +12,15 @@ import '@/styles/over-write-default-color.css';
 import '@/styles/common.scss';
 import '@/styles/loading-mask.scss';
 
+import lazy from '@/directives/lazy';
+
 const app = createApp(App);
 const pinia = createPinia();
+
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(router);
+app.directive('lazy', lazy);
 
 app.use(ElementPlus, {
   locale: zhCn,

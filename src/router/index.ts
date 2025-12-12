@@ -73,11 +73,11 @@ const router = createRouter({
           },
         },
         {
-          path: 'more',
-          name: 'more',
-          component: () => import('@/views/More/index.vue'),
+          path: 'waterfall',
+          name: 'waterfall',
+          component: () => import('@/views/Waterfall/index.vue'),
           meta: {
-            title: '更多',
+            title: '瀑布',
           },
         },
       ],
@@ -161,11 +161,11 @@ const router = createRouter({
           },
         },
         {
-          path: 'more',
-          name: 'dashboard-more',
-          component: () => import('@/views/Manager/More/index.vue'),
+          path: 'waterfall',
+          name: 'dashboard-waterfall',
+          component: () => import('@/views/Manager/Waterfall/index.vue'),
           meta: {
-            title: '更多管理',
+            title: '瀑布管理',
           },
         },
       ],

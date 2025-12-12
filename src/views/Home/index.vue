@@ -201,6 +201,7 @@ onMounted(async () => {
   color: #fff;
 
   .hero-weekday {
+    font-family: serif;
     font-size: 48px;
     font-weight: bold;
     margin: 0 0 10px 0;

@@ -41,3 +41,19 @@ export const DistantFromNowAndDate = (date: Date | string) => {
   //  使用 dayjs 处理时间格式化
   return dayjs(date).fromNow();
 };
+
+/**
+ * 返回一个[min,min+1,...,max]的数组
+ * @param min
+ * @param max
+ */
+export const range = (min: number, max: number): Array<number> => {
+  if (max < min) {
+    [min, max] = [max, min];
+  }
+  const res: Array<number> = [];
+  for (let i = min; i <= max; i++) {
+    res.push(i);
+  }
+  return res;
+};

@@ -46,6 +46,8 @@ Instance.interceptors.response.use(
     if (error.status === 401) {
       ElMessage.warning('登录已过期，请重新登录');
       router.replace({ path: '/login' });
+    } else if (error.status === 500) {
+      ElMessage.error('服务器异常，请联系管理员');
     }
     requestCount.value--;
     gracefulNProgressDone(requestCount);
