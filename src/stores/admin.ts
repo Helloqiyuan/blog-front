@@ -5,7 +5,7 @@ const useAdminStore = defineStore(
   'admin',
   () => {
     const adminInfo = ref<LoginVO | null>(null);
-    const getAdminInfo = () => {
+    const getAdminInfo = (): LoginVO | null => {
       return adminInfo.value;
     };
     const setAdminInfo = (info: LoginVO) => {

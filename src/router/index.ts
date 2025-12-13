@@ -114,11 +114,11 @@ const router = createRouter({
         {
           path: 'article/edit',
           name: 'dashboard-article-edit',
-          component: () => import('@/views/Manager/Article/components/Editor.vue'),
+          component: () => import('@/views/Manager/Article/components/EditArticle.vue'),
           meta: {
             title: '处理文章',
           },
-          props: (route) => ({ id: route.query.id }),
+          props: (route) => ({ id: Number(route.query.id) }),
         },
         {
           path: 'note',

@@ -18,7 +18,7 @@ const menuItems = [
   { id: '/friendlink', label: '友链管理', icon: Link },
   { id: '/subscribe', label: '订阅管理', icon: Connection },
   { id: '/about', label: '关于', icon: Monitor },
-  { id: '/more', label: '更多', icon: Camera },
+  { id: '/waterfall', label: '瀑布', icon: Camera },
 ];
 </script>
 

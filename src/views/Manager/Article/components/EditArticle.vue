@@ -1,87 +1,31 @@
 <script setup lang="ts">
-import '@wangeditor/editor/dist/css/style.css';
-
-import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue';
-// @ts-expect-error 忽略导入检查
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
+import { ref, onMounted, watch } from 'vue';
 import type { Article } from '@/apis/ArticleService/types';
 import { getArticleByIdApi, uploadArticleApi, updateArticleApi } from '@/apis/ArticleService';
-import type { IEditorConfig } from '@wangeditor/editor';
 import { ElMessage } from 'element-plus';
 import Upload from '@/components/Upload.vue';
+import WangEditor from '@/components/WangEditor.vue';
 import router from '@/router';
 const props = defineProps<{
   id?: number;
 }>();
+// 编辑或新增
 const isEdit = ref(false);
-// 编辑器实例，必须用 shallowRef
-const editorRef = shallowRef();
+// 标题ref
 const titleRef = ref();
+// 副标题ref
 const subTitleRef = ref();
 // 对话框显示与否
 const dialogVisible = ref(false);
+
 const form = ref<Article>({
   title: '',
   subTitle: '',
   cover: '',
   content: '',
 });
-
-const mode = 'default';
-const toolbarConfig = {};
 // 文章是否在上传
 const uploading = ref(false);
-const editorConfig: Partial<IEditorConfig> = {
-  MENU_CONF: {},
-  // 其他属性...
-};
-// @ts-expect-error 忽略属性不存在
-editorConfig.MENU_CONF['uploadImage'] = {
-  server: '/api/article/upload',
-  fieldName: 'file',
-  // 单个文件的最大体积限制，默认为 2M
-  maxFileSize: 5 * 1024 * 1024, // 5M
-  // 最多可上传几个文件，默认为 100
-  maxNumberOfFiles: 10,
-  // 选择文件时的类型限制，默认为 ['image/*'] 。如不想限制，则设置为 []
-  allowedFileTypes: ['image/*'],
-  // 跨域是否传递 cookie ，默认为 false
-  withCredentials: true,
-  // 超时时间，默认为 10 秒
-  timeout: 10 * 1000, // 10 秒
-  // 上传之前触发
-  onBeforeUpload(file: File) {
-    console.log('上传前触发钩子。。。');
-    // file 选中的文件，格式如 { key: file }
-    return file;
-  },
-
-  // 上传进度的回调函数
-  onProgress(progress: number) {
-    // progress 是 0-100 的数字
-    console.log('progress', progress);
-  },
-
-  // 单个文件上传成功之后
-  onSuccess(file: File, res: any) {
-    console.log(`${file.name} 上传成功`, res);
-  },
-
-  // 单个文件上传失败
-  onFailed(file: File, res: any) {
-    console.log(`${file.name} 上传失败`, res);
-  },
-
-  // 上传错误，或者触发 timeout 超时
-  onError(file: File, err: any, res: any) {
-    console.log(`${file.name} 上传出错`, err, res);
-  },
-};
-
-// 创建事件
-const handleCreated = (editor: unknown) => {
-  editorRef.value = editor;
-};
 /* 保存/编辑文章 */
 const saveOrEdit = async () => {
   if (!form.value.title || !form.value.subTitle || !form.value.content) {
@@ -111,8 +55,11 @@ const saveOrEdit = async () => {
     ElMessage.error('提交失败');
   }
 };
+/**
+ * 文章封面
+ * @param url 文章封面url
+ */
 const handleTransURL = (url: string) => {
-  console.log('father', url);
   form.value.cover = url;
 };
 onMounted(async () => {
@@ -121,12 +68,6 @@ onMounted(async () => {
     const res = await getArticleByIdApi(props.id);
     form.value = res.data;
   }
-});
-// 销毁实例
-onBeforeUnmount(() => {
-  const editor = editorRef.value;
-  if (editor == null) return;
-  editor.destroy();
 });
 </script>
 
@@ -158,25 +99,7 @@ onBeforeUnmount(() => {
       }}</el-button>
     </div>
     <div class="editor">
-      <Toolbar
-        style="border: 1px solid #ccc"
-        :editor="editorRef"
-        :defaultConfig="toolbarConfig"
-        :mode="mode"
-      />
-      <Editor
-        style="
-          height: 100%;
-          min-height: 500px;
-          overflow-y: hidden;
-          border: 1px solid #ccc;
-          border-top: none;
-        "
-        v-model="form.content"
-        :defaultConfig="editorConfig"
-        :mode="mode"
-        @onCreated="handleCreated"
-      />
+      <WangEditor v-model="form.content" />
     </div>
   </div>
   <el-dialog v-model="dialogVisible" title="信息完善" width="500" class="dialog">
@@ -200,6 +123,7 @@ onBeforeUnmount(() => {
   padding: 20px;
 }
 .title {
+  width: calc(100vw - 290px);
   display: flex;
   align-items: center;
   height: 50px;
@@ -217,6 +141,7 @@ onBeforeUnmount(() => {
   margin-left: auto;
 }
 .editor {
+  width: calc(100vw - 290px);
   height: calc(100vh - 200px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }

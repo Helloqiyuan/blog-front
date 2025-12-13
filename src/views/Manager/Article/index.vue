@@ -59,7 +59,7 @@ const handleEdit = (row: Article) => {
   router.push({
     path: '/dashboard/article/edit',
     query: {
-      id: row.id,
+      id: row?.id,
     },
   });
 };

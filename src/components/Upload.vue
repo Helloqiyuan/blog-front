@@ -2,6 +2,7 @@
   <el-upload
     class="avatar-uploader"
     action="/api/upload"
+    :headers="headers"
     drag
     :show-file-list="false"
     :on-success="handleAvatarSuccess"
@@ -20,22 +21,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRef } from 'vue';
+import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
-
+import useAdminStore from '@/stores/admin';
 import type { UploadProps } from 'element-plus';
 const props = defineProps(['url']);
 const emit = defineEmits(['transURL']);
 const uploading = ref(false);
+const adminStore = useAdminStore();
+const headers = {
+  Authorization: `Bearer ${adminStore.getAdminInfo()?.token}`,
+};
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
-  console.log('success', response, uploadFile);
+  console.log('图片上传成功回调', response, uploadFile);
   emit('transURL', response.data);
   uploading.value = false;
 };
 const handleAvatarError: UploadProps['onError'] = (err, uploadFile) => {
-  console.log('error', err, uploadFile);
+  console.log('图片上传失败回调', err, uploadFile);
   emit('transURL', '');
   uploading.value = false;
   ElMessage.error('上传失败');
@@ -43,7 +48,7 @@ const handleAvatarError: UploadProps['onError'] = (err, uploadFile) => {
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   uploading.value = true;
-  console.log('rawFile', rawFile);
+  console.log('图片上传前回调', rawFile);
 
   if (!rawFile.type.startsWith('image/')) {
     ElMessage.error('只能上传图片!');
