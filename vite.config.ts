@@ -11,6 +11,7 @@ export default defineConfig({
       // 代理规则
       '/api': {
         target: 'http://localhost:8080', // 后端接口地址
+        // target: 'http://112.124.44.107:8080', // 后端接口地址
         changeOrigin: true, // 是否修改请求头中的 origin
         rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径，可选
       },

@@ -1,0 +1,1 @@
+import{d as s,c as a,a as n,q as t}from"./index-D1KBpVxX.js";const o={class:"subscribe-manager"},d=s({__name:"index",setup(r){return(c,e)=>(t(),a("div",o,[...e[0]||(e[0]=[n("h1",null,"订阅管理",-1)])]))}});export{d as default};

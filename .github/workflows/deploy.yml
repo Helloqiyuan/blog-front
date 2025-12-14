@@ -1,0 +1,35 @@
+name: Deploy to Linux Nginx
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: [self-hosted]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify dist exists
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ dist directory not found, did you forget to commit it?"
+            exit 1
+          fi
+
+      - name: Clear old files
+        run: |
+          TARGET="/opt/1panel/apps/openresty/openresty/www/sites/yuanshen.icu/index/dist"
+          if [ -d "$TARGET" ]; then
+            rm -rf "$TARGET"/*
+          else
+            mkdir -p "$TARGET"
+          fi
+
+      - name: Copy dist to Nginx directory
+        run: |
+          TARGET="/opt/1panel/apps/openresty/openresty/www/sites/yuanshen.icu/index/dist"
+          cp -r dist/* "$TARGET/"

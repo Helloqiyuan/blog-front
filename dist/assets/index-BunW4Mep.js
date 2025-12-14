@@ -1,0 +1,1 @@
+import{d as s,c as t,a,q as n,_ as o}from"./index-D1KBpVxX.js";const _={class:"comment-manager"},c=s({__name:"index",setup(d){return(r,e)=>(n(),t("div",_,[...e[0]||(e[0]=[a("h1",null,"留言管理",-1)])]))}}),p=o(c,[["__scopeId","data-v-b60d4db8"]]);export{p as default};

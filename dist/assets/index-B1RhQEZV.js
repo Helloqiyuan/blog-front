@@ -1,0 +1,1 @@
+import{d as n,c as t,a,q as o}from"./index-D1KBpVxX.js";const s={class:"note-manager"},d=n({__name:"index",setup(r){return(c,e)=>(o(),t("div",s,[...e[0]||(e[0]=[a("h1",null,"随笔管理",-1)])]))}});export{d as default};
