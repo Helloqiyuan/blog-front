@@ -57,14 +57,6 @@ const router = createRouter({
           },
         },
         {
-          path: 'subscribe',
-          name: 'subscribe',
-          component: () => import('@/views/Subscribe/index.vue'),
-          meta: {
-            title: '订阅',
-          },
-        },
-        {
           path: 'about',
           name: 'about',
           component: () => import('@/views/About/index.vue'),

@@ -88,7 +88,7 @@ onMounted(async () => {
       <div class="hero-image">
         <!-- 图片占位，实际使用时替换为真实图片 -->
         <div class="hero-image-placeholder">
-          <img :src="heroImage?.url" alt="hero-image" />
+          <img v-trans="heroImage?.url" alt="hero-image" />
         </div>
         <div class="hero-overlay">
           <div class="hero-content">
@@ -201,7 +201,7 @@ onMounted(async () => {
   color: #fff;
 
   .hero-weekday {
-    font-family: serif;
+    font-family: $font;
     font-size: 48px;
     font-weight: bold;
     margin: 0 0 10px 0;

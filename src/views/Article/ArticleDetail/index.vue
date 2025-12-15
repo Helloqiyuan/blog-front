@@ -68,7 +68,7 @@ onMounted(() => {
   border-radius: 12px;
   border: 1px solid #e8e8e8;
   padding: 40px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: $boxShadow;
 }
 
 .detail-header {

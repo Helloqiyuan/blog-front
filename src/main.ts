@@ -13,6 +13,7 @@ import '@/styles/common.scss';
 import '@/styles/loading-mask.scss';
 
 import lazy from '@/directives/lazy';
+import trans from '@/directives/trans';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -21,6 +22,7 @@ pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
 app.use(router);
 app.directive('lazy', lazy);
+app.directive('trans', trans);
 
 app.use(ElementPlus, {
   locale: zhCn,

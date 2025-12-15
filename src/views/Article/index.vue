@@ -126,7 +126,7 @@ onMounted(async () => {
   width: 100%;
   height: 50px;
   background-color: $boxColor;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: $boxShadow;
   margin-bottom: 16px;
   border-radius: 12px;
 }
@@ -149,7 +149,7 @@ onMounted(async () => {
   padding: 24px;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: $boxShadow;
   cursor: pointer;
 
   &:hover {

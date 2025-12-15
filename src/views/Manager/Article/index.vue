@@ -207,7 +207,7 @@ onMounted(async () => {
   width: 100%;
   height: 50px;
   background-color: $boxColor;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: $boxShadow;
   margin-bottom: 16px;
   border-radius: 6px;
   padding: 0 20px;
