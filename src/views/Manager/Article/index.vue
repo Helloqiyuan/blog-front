@@ -3,18 +3,20 @@ import { ref, onMounted } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
 import { getArticleListApi, deleteArticleByIdApi } from '@/apis/ArticleService';
-import type { Article, PageQuery } from '@/apis/ArticleService/types';
+import type { Article, PageQueryDTO } from '@/apis/ArticleService/types';
 import router from '@/router';
 import type { RouterLink } from 'vue-router';
+import { SortType } from '@/apis/ArticleService/types';
 
 // 状态管理
 const articleList = ref<Article[]>([]);
 const loading = ref(false);
 
 // 搜索表单
-const searchForm = ref<PageQuery>({
+const searchForm = ref<PageQueryDTO>({
   page: 1,
-  pageSize: 100,
+  pageSize: 1000,
+  sortType: SortType.VIEW_COUNT_DESC,
   searchContent: '',
 });
 

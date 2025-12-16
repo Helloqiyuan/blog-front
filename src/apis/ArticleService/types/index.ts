@@ -1,12 +1,19 @@
+export enum SortType {
+  VIEW_COUNT_DESC = 0,
+  CREATE_TIME_DESC = 1,
+  UPDATE_TIME_DESC = 2,
+}
 /**
  * 分页查询参数
  * @param page 当前页码
  * @param pageSize 每页数量
+ * @param sortType 排序类型
  * @param searchContent 搜索关键字
  */
-export interface PageQuery {
+export interface PageQueryDTO {
   page: number;
   pageSize: number;
+  sortType: SortType;
   searchContent: string;
 }
 /**

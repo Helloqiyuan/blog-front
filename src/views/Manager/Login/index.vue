@@ -4,7 +4,7 @@ import router from '@/router';
 import { ElMessage } from 'element-plus';
 import { User, Lock } from '@element-plus/icons-vue';
 import type { LoginDTO } from '@/apis/AdminService/types';
-import { LoginApi } from '@/apis/AdminService';
+import { loginApi } from '@/apis/AdminService';
 import useAdminStore from '@/stores/admin';
 const form = ref<LoginDTO>({
   account: '',
@@ -25,7 +25,7 @@ const handleLogin = () => {
       try {
         // 模拟登录请求
         // debugger;
-        const res = await LoginApi(form.value);
+        const res = await loginApi(form.value);
         if (res.data?.token) {
           localStorage.setItem('adminToken', res.data.token);
           ElMessage.success('登录成功');

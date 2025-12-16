@@ -1,6 +1,6 @@
 import http from '@/utils/request';
 import type { Article, PageQueryVO } from '@/apis/ArticleService/types';
-import type { PageQuery } from '@/apis/ArticleService/types';
+import type { PageQueryDTO } from '@/apis/ArticleService/types';
 
 /**
  * 新增文章
@@ -42,7 +42,7 @@ export const getArticleByIdApi = (id: number) => {
  * @param pageQuery 分页与筛选参数
  * @returns 包含总数和文章列表的分页对象
  */
-export const getArticleListApi = (pageQuery: PageQuery) => {
+export const getArticleListApi = (pageQuery: PageQueryDTO) => {
   return http<PageQueryVO>({
     url: '/article/page',
     params: pageQuery,

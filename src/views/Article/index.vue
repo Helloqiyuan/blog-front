@@ -1,53 +1,39 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { getArticleListApi } from '@/apis/ArticleService';
 import type { Article } from '@/apis/ArticleService/types';
 import { View } from '@element-plus/icons-vue';
 import { DistantFromNowAndDate } from '@/utils/utils';
-import type { PageQuery } from '@/apis/ArticleService/types/index';
-import dayjs from 'dayjs';
+import type { PageQueryDTO } from '@/apis/ArticleService/types/index';
+import { SortType } from '@/apis/ArticleService/types';
+
 const articleList = ref<Article[]>([]);
-const searchForm = ref<PageQuery>({
+const total = ref(0);
+const searchForm = ref<PageQueryDTO>({
   page: 1,
-  pageSize: 100,
+  pageSize: 18,
+  sortType: SortType.VIEW_COUNT_DESC,
   searchContent: '',
 });
+const loading = ref(false);
 const getArticleList = async () => {
+  loading.value = true;
   const res = await getArticleListApi(searchForm.value);
   articleList.value = res.data.rows;
+  total.value = res.data.total;
+  loading.value = false;
 };
-const loading = ref(false);
-const sortType = ref(-1);
-watch([sortType, articleList], ([newSortType, newArticleList]) => {
-  if (sortType.value === -1) {
-    return;
-  }
-  loading.value = true;
-  if (newSortType === 0) {
-    articleList.value.sort((a: Article, b: Article) => {
-      return (b.viewCount as number) - (a.viewCount as number);
-    });
-  } else if (newSortType === 1) {
-    articleList.value.sort((a: Article, b: Article) => {
-      return (
-        new Date(b.createTime as string).getTime() - new Date(a.createTime as string).getTime()
-      );
-    });
-  } else {
-    articleList.value.sort((a: Article, b: Article) => {
-      return (
-        new Date(b.updateTime as string).getTime() - new Date(a.updateTime as string).getTime()
-      );
-    });
-  }
-  loading.value = false;
-});
-
-onMounted(async () => {
-  loading.value = true;
-  await getArticleList();
-  sortType.value = 0;
-  loading.value = false;
+watch(
+  searchForm,
+  () => {
+    getArticleList();
+  },
+  {
+    deep: true,
+  },
+);
+onMounted(() => {
+  getArticleList();
 });
 </script>
 
@@ -58,11 +44,12 @@ onMounted(async () => {
     element-loading-background="rgba(255, 255, 255, 1)"
     element-loading-text="正在全力加载中..."
   >
+    <!-- 功能区 -->
     <div class="function">
-      <el-radio-group v-model="sortType">
-        <el-radio :value="0">最多点击</el-radio>
-        <el-radio :value="1">最新发布</el-radio>
-        <el-radio :value="2">最新修改</el-radio>
+      <el-radio-group v-model="searchForm.sortType">
+        <el-radio :value="SortType.VIEW_COUNT_DESC">最多点击</el-radio>
+        <el-radio :value="SortType.CREATE_TIME_DESC">最新发布</el-radio>
+        <el-radio :value="SortType.UPDATE_TIME_DESC">最新修改</el-radio>
       </el-radio-group>
       <el-input
         v-model="searchForm.searchContent"
@@ -71,10 +58,21 @@ onMounted(async () => {
         @keydown.enter="getArticleList"
         clearable
       />
-      <el-button style="margin: 0 16px 0 8px" plain type="primary" @click="getArticleList"
+      <el-button style="margin-left: 16px" plain type="primary" @click="getArticleList"
         >搜索</el-button
       >
+      <el-button
+        style="margin-right: 16px"
+        plain
+        type="info"
+        @click="
+          searchForm.searchContent = '';
+          getArticleList();
+        "
+        >重置</el-button
+      >
     </div>
+    <!-- 列表区 -->
     <div class="note-list">
       <RouterLink
         :to="`/article/detail?id=${item.id}`"
@@ -88,7 +86,7 @@ onMounted(async () => {
         </div>
         <div class="note-body">
           <p class="note-content">{{ item.subTitle }}</p>
-          <img class="note-cover" v-if="item.cover" :src="item.cover" alt="" />
+          <img class="note-cover" v-if="item.cover" v-lazy="item.cover" alt="" />
         </div>
         <div class="note-footer" v-if="item.viewCount || item.createTime">
           <span class="note-meta" v-if="item.viewCount">
@@ -104,6 +102,19 @@ onMounted(async () => {
         </div>
       </RouterLink>
     </div>
+    <!-- 分页区 -->
+    <div class="pagination-block">
+      <el-pagination
+        v-model:current-page="searchForm.page"
+        v-model:page-size="searchForm.pageSize"
+        :page-sizes="[18, 36, 54, 90, 120]"
+        :background="true"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="getArticleList"
+        @current-change="getArticleList"
+      />
+    </div>
   </div>
 </template>
 
@@ -111,7 +122,7 @@ onMounted(async () => {
 .article-content {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   height: max-content;
   padding: 20px;
   background-color: #f5f5f5;
@@ -141,7 +152,7 @@ onMounted(async () => {
 .note-item {
   display: flex;
   flex-direction: column;
-  width: calc(50% - 12px);
+  width: calc(33.33% - 16px);
   min-height: 280px;
   background-color: #ffffff;
   border-radius: 12px;
@@ -202,9 +213,10 @@ onMounted(async () => {
   }
   .note-cover {
     width: 250px;
-    height: 250px;
-    border: 1px solid #ccc;
-    object-fit: cover;
+    height: 150px;
+    object-fit: contain;
+    transition: all 1.5s ease-in-out;
+    opacity: 0;
   }
 
   .note-footer {
@@ -226,5 +238,19 @@ onMounted(async () => {
       font-size: 14px;
     }
   }
+}
+.pagination-block {
+  position: sticky;
+  bottom: 0;
+  margin: 20px 20px 20px 0px;
+  width: max-content;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: $boxColor;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+  box-shadow: $boxShadow;
 }
 </style>

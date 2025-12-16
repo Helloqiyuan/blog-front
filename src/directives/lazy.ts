@@ -2,6 +2,7 @@ import type { Directive, DirectiveBinding } from 'vue';
 /**
  * 图片懒加载
  * 当组件在视口中出现了至少10%时加载src
+ * 用于src的值不变只需要延后加载
  */
 const lazy: Directive = {
   mounted(el: HTMLImageElement, binding: DirectiveBinding) {

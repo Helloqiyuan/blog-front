@@ -37,6 +37,16 @@ const projects = ref([
 ]);
 const loading = ref(true);
 const heroImage = ref<Photo>();
+
+// 图片加载错误处理
+const handleImageError = (e: Event) => {
+  const target = e.target as HTMLImageElement;
+  // 设置默认占位图
+  target.src =
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPlx1NWYzZlx1NmM4NzwvdGV4dD48L3N2Zz4=';
+  target.style.opacity = '1';
+};
+
 // 热搜数据
 const hotSearchList = ref<Tips[]>([]);
 // 获取当前日期信息
@@ -88,7 +98,7 @@ onMounted(async () => {
       <div class="hero-image">
         <!-- 图片占位，实际使用时替换为真实图片 -->
         <div class="hero-image-placeholder">
-          <img v-trans="heroImage?.url" alt="hero-image" />
+          <img v-trans="heroImage?.url" alt="hero-image" @error="handleImageError" />
         </div>
         <div class="hero-overlay">
           <div class="hero-content">
@@ -180,6 +190,7 @@ onMounted(async () => {
   img {
     width: 100%;
     height: 100%;
+    opacity: 0;
     object-fit: cover;
   }
 }
@@ -201,7 +212,7 @@ onMounted(async () => {
   color: #fff;
 
   .hero-weekday {
-    font-family: $font;
+    font-family: serif;
     font-size: 48px;
     font-weight: bold;
     margin: 0 0 10px 0;

@@ -136,30 +136,6 @@ const router = createRouter({
             title: '友链管理',
           },
         },
-        {
-          path: 'subscribe',
-          name: 'dashboard-subscribe',
-          component: () => import('@/views/Manager/Subscribe/index.vue'),
-          meta: {
-            title: '订阅管理',
-          },
-        },
-        {
-          path: 'about',
-          name: 'dashboard-about',
-          component: () => import('@/views/Manager/About/index.vue'),
-          meta: {
-            title: '关于管理',
-          },
-        },
-        {
-          path: 'waterfall',
-          name: 'dashboard-waterfall',
-          component: () => import('@/views/Manager/Waterfall/index.vue'),
-          meta: {
-            title: '瀑布管理',
-          },
-        },
       ],
     },
   ],

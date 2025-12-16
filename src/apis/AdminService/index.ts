@@ -5,7 +5,7 @@ import type { LoginDTO, LoginVO } from './types';
  * @param loginDTO 登录表单数据，包含账号和密码
  * @returns 登录成功返回用户信息及 token
  */
-export const LoginApi = (loginDTO: LoginDTO) => {
+export const loginApi = (loginDTO: LoginDTO) => {
   return http<LoginVO>({
     url: '/admin/login',
     method: 'post',

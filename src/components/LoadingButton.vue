@@ -23,7 +23,7 @@ onMounted(() => {
   cursor: pointer;
   background-image: url('@/assets/loading.svg');
   background-size: cover;
-  transition: transform 0.5s;
+  transition: all 0.5s;
   &:hover {
     background-image: url('@/assets/loading-hover.svg');
   }
