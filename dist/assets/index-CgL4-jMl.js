@@ -1,1 +1,0 @@
-import{d as a,c as t,a as n,p as o}from"./index-BexqmIYW.js";const s={class:"about-manager"},_=a({__name:"index",setup(r){return(c,e)=>(o(),t("div",s,[...e[0]||(e[0]=[n("h1",null,"关于管理",-1)])]))}});export{_ as default};

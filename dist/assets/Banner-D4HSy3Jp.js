@@ -1,0 +1,1 @@
+import{_ as n,c as o,a as s,K as t,p as a}from"./index-C4-hAADe.js";const c={},r={class:"banner"},_={class:"title"},d={class:"subtitle"};function i(e,l){return a(),o("div",r,[s("h1",_,[t(e.$slots,"title",{},void 0,!0)]),s("span",d,[t(e.$slots,"subtitle",{},void 0,!0)])])}const f=n(c,[["render",i],["__scopeId","data-v-2910b968"]]);export{f as B};

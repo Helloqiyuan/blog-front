@@ -1,1 +1,0 @@
-import{d as s,c as a,a as n,p as t}from"./index-BexqmIYW.js";const o={class:"subscribe-manager"},_=s({__name:"index",setup(r){return(c,e)=>(t(),a("div",o,[...e[0]||(e[0]=[n("h1",null,"订阅管理",-1)])]))}});export{_ as default};
