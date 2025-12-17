@@ -37,7 +37,7 @@ const baseURL = 'https://qiyuan-cloud-data.oss-cn-guangzhou.aliyuncs.com/avatar/
   height: max-content;
   padding: 20px;
   background-color: $boxColor;
-  border-radius: 12px;
+  border-radius: $radius;
   display: flex;
   gap: 12px;
   .column {

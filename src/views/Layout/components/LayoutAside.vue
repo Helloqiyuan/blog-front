@@ -61,6 +61,7 @@ const menuItems = [
   padding: 20px 0 0 0;
   box-sizing: border-box;
   position: relative;
+  background-color: $boxColor;
 }
 
 .user-avatar {
@@ -95,13 +96,13 @@ const menuItems = [
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s;
-  color: #333;
+  color: $fontColor;
   position: relative;
 
   .nav-icon {
     font-size: 18px;
     margin-right: 12px;
-    color: #666;
+    color: $fontColor;
   }
 
   .nav-label {

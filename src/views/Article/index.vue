@@ -47,9 +47,9 @@ onMounted(() => {
     <!-- 功能区 -->
     <div class="function">
       <el-radio-group v-model="searchForm.sortType">
-        <el-radio :value="SortType.VIEW_COUNT_DESC">最多点击</el-radio>
-        <el-radio :value="SortType.CREATE_TIME_DESC">最新发布</el-radio>
-        <el-radio :value="SortType.UPDATE_TIME_DESC">最新修改</el-radio>
+        <el-radio :value="SortType.VIEW_COUNT_DESC" class="radio">最多点击</el-radio>
+        <el-radio :value="SortType.CREATE_TIME_DESC" class="radio">最新发布</el-radio>
+        <el-radio :value="SortType.UPDATE_TIME_DESC" class="radio">最新修改</el-radio>
       </el-radio-group>
       <el-input
         v-model="searchForm.searchContent"
@@ -80,6 +80,7 @@ onMounted(() => {
         target="_blank"
         v-for="item in articleList"
         :key="item.id"
+        v-scale
       >
         <div class="note-header">
           <h3 class="note-title">{{ item.title }}</h3>
@@ -122,10 +123,10 @@ onMounted(() => {
 .article-content {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   height: max-content;
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: $backColor;
 }
 .function {
   position: sticky;
@@ -139,7 +140,10 @@ onMounted(() => {
   background-color: $boxColor;
   box-shadow: $boxShadow;
   margin-bottom: 16px;
-  border-radius: 12px;
+  border-radius: $radius;
+  .radio {
+    color: $lightFontColor;
+  }
 }
 .note-list {
   display: flex;
@@ -154,8 +158,8 @@ onMounted(() => {
   flex-direction: column;
   width: calc(33.33% - 16px);
   min-height: 280px;
-  background-color: #ffffff;
-  border-radius: 12px;
+  background-color: $boxColor;
+  border-radius: $radius;
   border: 1px solid #e8e8e8;
   padding: 24px;
   text-decoration: none;
@@ -176,7 +180,7 @@ onMounted(() => {
   .note-title {
     font-size: 20px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: $fontColor;
     line-height: 1.5;
     margin: 0;
     display: -webkit-box;
@@ -201,7 +205,7 @@ onMounted(() => {
 
   .note-content {
     font-size: 14px;
-    color: #666;
+    color: $lightFontColor;
     line-height: 1.6;
     margin: 0;
     display: -webkit-box;
@@ -226,7 +230,7 @@ onMounted(() => {
     padding-top: 16px;
     border-top: 1px solid #f0f0f0;
     font-size: 12px;
-    color: #999;
+    color: $lightFontColor;
   }
 
   .note-meta {
@@ -249,7 +253,7 @@ onMounted(() => {
   align-items: center;
   padding: 0 20px;
   background-color: $boxColor;
-  border-radius: 12px;
+  border-radius: $radius;
   border: 1px solid #e8e8e8;
   box-shadow: $boxShadow;
 }

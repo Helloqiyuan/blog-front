@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import useAdminStore from '@/stores/admin.ts';
 import { ElMessage } from 'element-plus';
+import dayjs from '@/utils/dayjs';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -146,12 +147,17 @@ router.beforeEach((to) => {
   }
 
   const adminStore = useAdminStore();
+  const adminInfo = adminStore.getAdminInfo();
 
   if (!to.fullPath.startsWith('/dashboard')) {
     return true;
   }
-  if (!adminStore.getAdminInfo() || !adminStore.getAdminInfo()?.token) {
-    ElMessage.warning('token失效，请重新登录');
+  if (!adminInfo || !adminInfo.token) {
+    ElMessage.warning('请先重新登录');
+    return '/login';
+  }
+  if (Number(adminInfo.exp) < dayjs().valueOf()) {
+    ElMessage.warning('登录过期，请重新登录');
     return '/login';
   }
   return true;

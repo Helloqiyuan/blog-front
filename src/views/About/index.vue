@@ -12,16 +12,16 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
     <div class="about-mine">
       <img class="avatar" src="@/assets/images/img.jpg" alt="" />
       <div class="information">
-        <div class="name item">
+        <div class="item">
           <el-icon><User /></el-icon>Helloqiyuan
         </div>
-        <div class="job item">
+        <div class="item">
           <el-icon><EditPen /></el-icon>学生
         </div>
-        <div class="email item">
+        <div class="item">
           <el-icon><Message /></el-icon>3302663850@qq.com
         </div>
-        <div class="introduction item">
+        <div class="item">
           <el-icon><Document /></el-icon>一个正在努力学习的程序员(这句话由AI生成)
         </div>
       </div>
@@ -59,7 +59,7 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
   padding: 20px;
   background-color: $boxColor;
   box-shadow: $boxShadow;
-  border-radius: 12px;
+  border-radius: $radius;
   .avatar {
     width: 100px;
     height: 100px;
@@ -70,11 +70,12 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
     flex-direction: column;
     padding-left: 10px;
     height: 100%;
+    color: $fontColor;
     .item {
       flex: 1;
       display: flex;
       align-items: center;
-      font-family: $font;
+      font-family: $fontFamily;
       gap: 8px;
     }
   }
@@ -86,11 +87,12 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
   height: 100%;
   background-color: $boxColor;
   box-shadow: $boxShadow;
-  border-radius: 12px;
+  border-radius: $radius;
+  color: $fontColor;
   h1 {
     border-left: 5px solid $blogColor;
     padding-left: 10px;
-    font-family: $font;
+    font-family: $fontFamily;
     font-weight: normal;
   }
   span {

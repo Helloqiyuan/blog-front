@@ -65,7 +65,7 @@ onMounted(() => {
 .detail-card {
   margin: 0 auto;
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: $radius;
   border: 1px solid #e8e8e8;
   padding: 40px;
   box-shadow: $boxShadow;

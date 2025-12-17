@@ -139,6 +139,7 @@ onMounted(async () => {
           v-for="project in projects"
           :key="project.id"
           class="project-card"
+          v-scale
         >
           <div class="project-icon" :style="{ color: project.iconColor }">
             {{ project.icon }}
@@ -180,7 +181,7 @@ onMounted(async () => {
   flex: 1;
   position: relative;
   height: 400px;
-  border-radius: 8px;
+  border-radius: $radius;
   overflow: hidden;
 }
 
@@ -230,10 +231,11 @@ onMounted(async () => {
 .hot-search-section {
   width: 500px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: $radius;
   padding: 20px;
   box-sizing: border-box;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: $boxColor;
 }
 
 .hot-search-header {
@@ -249,7 +251,7 @@ onMounted(async () => {
   font-size: 16px;
   font-weight: 600;
   margin: 0;
-  color: #333;
+  color: $fontColor;
 }
 
 .hot-search-list {
@@ -304,7 +306,7 @@ onMounted(async () => {
 .hot-search-title-text {
   flex: 1;
   font-size: 14px;
-  color: #333;
+  color: $lightFontColor;
   line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -332,7 +334,7 @@ onMounted(async () => {
 .section-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: $fontColor;
   margin: 0;
 }
 
@@ -347,12 +349,13 @@ onMounted(async () => {
   align-items: center;
   padding: 20px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: $radius;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+  background-color: $boxColor;
   transition:
     box-shadow 0.3s,
     transform 0.2s;
-  text-decoration: none;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -373,13 +376,13 @@ onMounted(async () => {
 .project-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: $fontColor;
   margin: 0 0 8px 0;
 }
 
 .project-description {
   font-size: 14px;
-  color: #999;
+  color: $lightFontColor;
   margin: 0;
   line-height: 1.5;
 }

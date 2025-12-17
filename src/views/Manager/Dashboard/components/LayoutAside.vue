@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import useAdminStore from '@/stores/admin';
-import dayjs from '@/utils/dayjs';
-import { useRouter } from 'vue-router';
-import { ElMessage } from 'element-plus';
-const router = useRouter();
-const adminStore = useAdminStore();
-const adminInfo = adminStore.getAdminInfo();
 import {
   House,
   Document,
@@ -24,12 +16,6 @@ const menuItems = [
   { id: '/comment', label: '留言管理', icon: ChatDotRound },
   { id: '/friendlink', label: '友链管理', icon: Link },
 ];
-onMounted(async () => {
-  if (!adminInfo || Number(adminInfo.exp) < dayjs().valueOf()) {
-    ElMessage.warning('登录过期，请重新登录');
-    router.push('/login');
-  }
-});
 </script>
 
 <template>

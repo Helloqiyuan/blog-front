@@ -17,11 +17,15 @@
   width: 100%;
   height: 200px;
   background-color: $boxColor;
-  border-radius: 12px;
+  border-radius: $radius;
   box-shadow: $boxShadow;
   .title {
     font-weight: normal;
-    font-family: $font;
+    font-family: $fontFamily;
+    color: $fontColor;
+  }
+  .subtitle {
+    color: $lightFontColor;
   }
 }
 </style>
