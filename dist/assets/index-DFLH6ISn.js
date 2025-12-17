@@ -1,0 +1,1 @@
+import{d as n,c as t,a,p as o}from"./index-CmUmu-Kb.js";const s={class:"note-manager"},_=n({__name:"index",setup(r){return(c,e)=>(o(),t("div",s,[...e[0]||(e[0]=[a("h1",null,"随笔管理",-1)])]))}});export{_ as default};

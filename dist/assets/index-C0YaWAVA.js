@@ -1,1 +1,0 @@
-import{d as s,c as t,a,p as n,_ as o}from"./index-C4-hAADe.js";const _={class:"comment-manager"},c=s({__name:"index",setup(d){return(r,e)=>(n(),t("div",_,[...e[0]||(e[0]=[a("h1",null,"留言管理",-1)])]))}}),m=o(c,[["__scopeId","data-v-b60d4db8"]]);export{m as default};
