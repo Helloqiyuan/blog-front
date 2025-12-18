@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Banner from '@/components/Banner.vue';
-import { getNoteListApi } from '@/apis/NoteService';
+import { getAllNoteListApi } from '@/apis/NoteService';
 import type { Note } from '@/apis/NoteService/types';
 const noteList = ref<Note[]>([]);
 const getNoteList = async () => {
-  const res = await getNoteListApi();
+  const res = await getAllNoteListApi();
   noteList.value = res.data;
 };
 onMounted(() => {

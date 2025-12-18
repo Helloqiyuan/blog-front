@@ -119,11 +119,13 @@ onMounted(async () => {
           clearable
           @keydown.enter="handleSearch"
         />
-        <el-button style="margin: 0 8px" plain type="primary" @click="handleSearch">
+        <el-button style="margin-left: 0" plain type="primary" @click="handleSearch">
           搜索
         </el-button>
-        <el-button plain @click="handleReset">重置</el-button>
-        <el-button type="success" @click="handleAdd" :icon="Plus">新增文章</el-button>
+        <el-button style="margin-left: 0" plain @click="handleReset">重置</el-button>
+        <el-button style="margin-left: 0" plain type="success" @click="handleAdd" :icon="Plus"
+          >新增文章</el-button
+        >
       </div>
     </div>
 

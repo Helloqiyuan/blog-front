@@ -7,3 +7,18 @@ export interface Note {
 
   typeName?: string;
 }
+export interface NoteType {
+  id?: number;
+  name: string;
+  createTime?: string;
+}
+export interface PageQueryDTO {
+  page: number;
+  pageSize: number;
+  content: string;
+  typeId: number;
+}
+export interface PageQueryVO {
+  total: number;
+  rows: Note[];
+}
