@@ -1,0 +1,1 @@
+import{d as n,c as a,a as s,p as t}from"./index-CeZtz63R.js";const o={class:"friendlink-manager"},i=n({__name:"index",setup(r){return(c,e)=>(t(),a("div",o,[...e[0]||(e[0]=[s("h1",null,"友链管理",-1)])]))}});export{i as default};

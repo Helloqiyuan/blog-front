@@ -1,0 +1,1 @@
+import{_ as n,c as o,a as s,K as t,p as a}from"./index-CeZtz63R.js";const c={},r={class:"banner"},d={class:"title"},_={class:"subtitle"};function i(e,l){return a(),o("div",r,[s("h1",d,[t(e.$slots,"title",{},void 0,!0)]),s("span",_,[t(e.$slots,"subtitle",{},void 0,!0)])])}const f=n(c,[["render",i],["__scopeId","data-v-ecbd7394"]]);export{f as B};
