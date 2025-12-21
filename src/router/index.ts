@@ -137,6 +137,14 @@ const router = createRouter({
             title: '友链管理',
           },
         },
+        {
+          path: 'log',
+          name: 'dashboard-log',
+          component: () => import('@/views/Manager/Log/index.vue'),
+          meta: {
+            title: '日志管理',
+          },
+        },
       ],
     },
   ],
