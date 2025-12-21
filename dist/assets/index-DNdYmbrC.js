@@ -1,0 +1,1 @@
+import{h as e}from"./request-DjrLiPRI.js";const o=t=>e({url:"/note/page",params:t}),a=()=>e({url:"/note/all"}),n=()=>e({url:"/notetype/all"}),s=t=>e({url:"/note",params:{id:t}}),p=t=>e({url:"/note",method:"POST",data:t}),u=t=>e({url:"/note",method:"PUT",data:t}),l=t=>e({url:"/note",method:"DELETE",params:{id:t}});export{n as a,p as b,s as c,l as d,u as e,a as g,o as n};
