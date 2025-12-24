@@ -9,3 +9,12 @@ export interface Result<T> {
   data: T;
   message: string;
 }
+/**
+ * 分页结果
+ * @param total 总数
+ * @param rows 分页数据
+ */
+export interface PageResult<T> {
+  total: number;
+  rows: T[];
+}

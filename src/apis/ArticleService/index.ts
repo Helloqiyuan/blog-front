@@ -42,7 +42,7 @@ export const getArticleByIdApi = (id: number) => {
  * @param pageQuery 分页与筛选参数
  * @returns 包含总数和文章列表的分页对象
  */
-export const getArticleListApi = (pageQuery: PageQueryDTO) => {
+export const ArticlePagequeryApi = (pageQuery: PageQueryDTO) => {
   return http<PageQueryVO>({
     url: '/article/page',
     params: pageQuery,

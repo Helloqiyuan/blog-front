@@ -57,3 +57,26 @@ export const range = (min: number, max: number): Array<number> => {
   }
   return res;
 };
+/**
+ * 判断传入时间与当前时间的差值是否小于 24 小时
+ * @param timeStr yyyy-MM-dd HH:mm:ss
+ * @returns boolean
+ */
+export const isWithin24Hours = (timeStr: string): boolean => {
+  const inputTime = dayjs(timeStr, 'YYYY-MM-DD HH:mm:ss');
+
+  // 非法时间直接返回 false（可选但推荐）
+  if (!inputTime.isValid()) {
+    return false;
+  }
+
+  const now = dayjs();
+
+  // 差值（毫秒）
+  const diff = Math.abs(now.valueOf() - inputTime.valueOf());
+
+  // 24 小时的毫秒数
+  const DAY_MS = 24 * 60 * 60 * 1000;
+
+  return diff < DAY_MS;
+};

@@ -15,10 +15,10 @@ const menuItems = [
   { id: '', label: '首页', icon: House },
   { id: 'article', label: '文章', icon: Document },
   { id: 'note', label: '随笔', icon: EditPen },
-  { id: 'comment', label: '留言', icon: ChatDotRound },
+  // { id: 'comment', label: '留言', icon: ChatDotRound },
   { id: 'friendlink', label: '友链', icon: Link },
-  { id: 'about', label: '关于', icon: Monitor },
   { id: 'waterfall', label: '瀑布', icon: Camera },
+  { id: 'about', label: '关于', icon: Monitor },
   { id: 'dashboard', label: '登录', icon: User },
 ];
 </script>

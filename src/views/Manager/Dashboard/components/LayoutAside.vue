@@ -13,7 +13,7 @@ const menuItems = [
   { id: '', label: '欢迎回来', icon: House },
   { id: '/article', label: '文章管理', icon: Document },
   { id: '/note', label: '随笔管理', icon: EditPen },
-  { id: '/comment', label: '留言管理', icon: ChatDotRound },
+  // { id: '/comment', label: '留言管理', icon: ChatDotRound },
   { id: '/friendlink', label: '友链管理', icon: Link },
   { id: '/log', label: '日志管理', icon: Monitor },
 ];

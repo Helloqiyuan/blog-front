@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import { getArticleListApi, deleteArticleByIdApi } from '@/apis/ArticleService';
+import { ArticlePagequeryApi, deleteArticleByIdApi } from '@/apis/ArticleService';
 import type { Article, PageQueryDTO } from '@/apis/ArticleService/types';
 import router from '@/router';
 import type { RouterLink } from 'vue-router';
@@ -24,7 +24,7 @@ const searchForm = ref<PageQueryDTO>({
 const fetchArticleList = async () => {
   loading.value = true;
   try {
-    const res = await getArticleListApi(searchForm.value);
+    const res = await ArticlePagequeryApi(searchForm.value);
     if (res.code === 1) {
       articleList.value = res.data.rows || [];
     } else {

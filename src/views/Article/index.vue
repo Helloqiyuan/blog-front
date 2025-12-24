@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { getArticleListApi } from '@/apis/ArticleService';
+import { ArticlePagequeryApi } from '@/apis/ArticleService';
 import type { Article } from '@/apis/ArticleService/types';
 import { View } from '@element-plus/icons-vue';
 import { DistantFromNowAndDate } from '@/utils/utils';
@@ -18,7 +18,7 @@ const searchForm = ref<PageQueryDTO>({
 const loading = ref(false);
 const getArticleList = async () => {
   loading.value = true;
-  const res = await getArticleListApi(searchForm.value);
+  const res = await ArticlePagequeryApi(searchForm.value);
   articleList.value = res.data.rows;
   total.value = res.data.total;
   loading.value = false;

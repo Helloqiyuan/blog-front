@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import NProgress from './nprogress';
 import { ref } from 'vue';
 import { gracefulNProgressDone } from './utils';
-import type { Result } from '@/apis/types/Result';
+import type { Result } from '@/apis/types';
 import useAdminStore from '@/stores/admin';
 import router from '@/router';
 import { ElMessage } from 'element-plus';

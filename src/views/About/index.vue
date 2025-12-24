@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Banner from '@/components/Banner.vue';
 import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
+import Block from '@/components/Block.vue';
 </script>
 
 <template>
@@ -26,19 +27,31 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
         </div>
       </div>
     </div>
-    <div class="about-website">
-      <h1>关于本站</h1>
-      <span
-        >前端：<strong>Vue3</strong> + <strong>Vite</strong> +
-        <strong>Element Plus</strong
-        >，后端：<strong>Java</strong>，数据库：<strong>MySQL</strong>；阿里云服务器。</span
-      >
-      <span
-        >本站的编写纯属个人兴趣爱好，前后端均独立完成；主要用来记录自己工作、生活、学习上的笔记。</span
-      >
-      <span>本站前端代码，未考虑IE等低版本浏览器的兼容性。暂时未适配移动端。</span>
-      <span>本站发布的文章或其他信息如有侵权，请邮箱联系我及时删除，感谢！</span>
-    </div>
+    <Block class="about-website">
+      <template #title>关于本站</template>
+      <template #content>
+        <span
+          >前端：<strong>Vue3</strong> + <strong>Vite</strong> +
+          <strong>Element Plus</strong
+          >，后端：<strong>Java</strong>，数据库：<strong>MySQL</strong>；阿里云服务器。</span
+        >
+        <span
+          >本站的编写纯属个人兴趣爱好，前后端均独立完成；主要用来记录自己工作、生活、学习上的笔记。</span
+        >
+        <span>本站前端代码，未考虑IE等低版本浏览器的兼容性。暂时未适配移动端。</span>
+        <span>本站发布的文章或其他信息如有侵权，请邮箱联系我及时删除，感谢！</span
+        ><span
+          >前端：<strong>Vue3</strong> + <strong>Vite</strong> +
+          <strong>Element Plus</strong
+          >，后端：<strong>Java</strong>，数据库：<strong>MySQL</strong>；阿里云服务器。</span
+        >
+        <span
+          >本站的编写纯属个人兴趣爱好，前后端均独立完成；主要用来记录自己工作、生活、学习上的笔记。</span
+        >
+        <span>本站前端代码，未考虑IE等低版本浏览器的兼容性。暂时未适配移动端。</span>
+        <span>本站发布的文章或其他信息如有侵权，请邮箱联系我及时删除，感谢！</span>
+      </template>
+    </Block>
   </div>
 </template>
 
@@ -81,20 +94,6 @@ import { User, EditPen, Message, Document } from '@element-plus/icons-vue';
   }
 }
 .about-website {
-  width: 100%;
-  margin-top: 20px;
-  padding: 20px;
-  height: 100%;
-  background-color: $boxColor;
-  box-shadow: $boxShadow;
-  border-radius: $radius;
-  color: $fontColor;
-  h1 {
-    border-left: 5px solid $blogColor;
-    padding-left: 10px;
-    font-family: $fontFamily;
-    font-weight: normal;
-  }
   span {
     display: block;
     margin: 20px 0;

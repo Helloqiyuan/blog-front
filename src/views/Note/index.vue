@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import Banner from '@/components/Banner.vue';
 import { getAllNoteListApi } from '@/apis/NoteService';
 import type { Note } from '@/apis/NoteService/types';
+import { isWithin24Hours } from '@/utils/utils';
 const noteList = ref<Note[]>([]);
 const getNoteList = async () => {
   const res = await getAllNoteListApi();
@@ -34,7 +35,15 @@ onMounted(() => {
             </div>
           </div>
           <div class="note-body">
-            <div class="note-title">{{ note.typeName }}</div>
+            <img
+              v-if="isWithin24Hours(note.createTime as string)"
+              src="@/assets/new.svg"
+              class="new"
+              alt=""
+            />
+            <div class="note-title">
+              {{ note.typeName }}
+            </div>
             <div class="note-detail">
               <img class="note-point" src="@/assets/point.svg" alt="point" />
               {{ note.content }}
@@ -114,6 +123,13 @@ onMounted(() => {
       padding: 20px;
       margin: 20px 0;
       background-color: #fafafc;
+      position: relative;
+      .new {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 33px;
+      }
       .note-title {
         border-left: 5px solid #35b378;
         padding: 10px 10px 10px 15px;
