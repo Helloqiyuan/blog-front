@@ -1,1 +1,0 @@
-import{h as e}from"./request-DjrLiPRI.js";const a=t=>e({url:"/article",method:"post",data:t}),i=t=>e({url:"/article",method:"put",data:t}),l=t=>e({url:`/article?id=${t}`}),c=t=>e({url:"/article/page",params:t}),d=t=>e({url:`/article?id=${t}`,method:"delete"});export{l as a,a as b,d,c as g,i as u};
