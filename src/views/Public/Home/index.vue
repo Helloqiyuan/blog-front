@@ -2,9 +2,9 @@
 import { ref, computed, onMounted } from 'vue';
 import LoadingButton from '@/components/LoadingButton.vue';
 import type { Tips } from '@/apis/TipsService/types';
-import type { Photo } from '@/apis/PhotoService/types';
+import type { Photo } from '@/apis/HeroPhotoService/types';
 import { getRandomTips } from '@/apis/TipsService';
-import { getPhotoRandom } from '@/apis/PhotoService';
+import { getPhotoRandom } from '@/apis/HeroPhotoService';
 // 个人作品数据
 const projects = ref([
   {

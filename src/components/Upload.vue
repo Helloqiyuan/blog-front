@@ -12,7 +12,7 @@
     element-loading-background="rgba(255, 255, 255, 1)"
     element-loading-text="正在上传中..."
   >
-    <img v-if="url" :src="url" class="avatar" />
+    <img v-if="modelValue" :src="modelValue" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon">
       <Plus />
       <el-text class="mx-1">点击上传或<strong>拖拽</strong>到此处上传</el-text>
@@ -26,8 +26,8 @@ import { ElMessage } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
 import useAdminStore from '@/stores/admin';
 import type { UploadProps } from 'element-plus';
-const props = defineProps(['url']);
-const emit = defineEmits(['transURL']);
+const props = defineProps(['modelValue']);
+const emit = defineEmits(['update:modelValue']);
 const uploading = ref(false);
 const adminStore = useAdminStore();
 const headers = {
@@ -36,12 +36,12 @@ const headers = {
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   console.log('图片上传成功回调', response, uploadFile);
-  emit('transURL', response.data);
+  emit('update:modelValue', response.data);
   uploading.value = false;
 };
 const handleAvatarError: UploadProps['onError'] = (err, uploadFile) => {
   console.log('图片上传失败回调', err, uploadFile);
-  emit('transURL', '');
+  emit('update:modelValue', '');
   uploading.value = false;
   ElMessage.error('上传失败');
 };

@@ -55,13 +55,6 @@ const saveOrEdit = async () => {
     ElMessage.error('提交失败');
   }
 };
-/**
- * 文章封面
- * @param url 文章封面url
- */
-const handleTransURL = (url: string) => {
-  form.value.cover = url;
-};
 onMounted(async () => {
   if (props.id) {
     isEdit.value = true;
@@ -104,7 +97,7 @@ onMounted(async () => {
   </div>
   <el-dialog v-model="dialogVisible" title="信息完善" width="500" class="dialog">
     <span>{{ isEdit ? '修改封面' : '上传封面' }}(可选)</span>
-    <Upload :url="form.cover" @transURL="handleTransURL" />
+    <Upload v-model="form.cover" />
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogVisible = false">取消</el-button>

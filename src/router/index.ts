@@ -8,12 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'layout',
-      component: () => import('@/views/Layout/index.vue'),
+      component: () => import('@/views/Public/Layout/index.vue'),
       children: [
         {
           path: '',
           name: 'home',
-          component: () => import('@/views/Home/index.vue'),
+          component: () => import('@/views/Public/Home/index.vue'),
           meta: {
             title: 'Helloqiyuan的博客',
           },
@@ -21,7 +21,7 @@ const router = createRouter({
         {
           path: 'article',
           name: 'article',
-          component: () => import('@/views/Article/index.vue'),
+          component: () => import('@/views/Public/Article/index.vue'),
           meta: {
             title: '文章',
           },
@@ -29,13 +29,13 @@ const router = createRouter({
         {
           path: 'article/detail',
           name: 'articledetail',
-          component: () => import('@/views/Article/ArticleDetail/index.vue'),
+          component: () => import('@/views/Public/Article/ArticleDetail/index.vue'),
           props: (route) => ({ id: Number(route.query.id) }),
         },
         {
           path: 'note',
           name: 'note',
-          component: () => import('@/views/Note/index.vue'),
+          component: () => import('@/views/Public/Note/index.vue'),
           meta: {
             title: '随笔',
           },
@@ -44,7 +44,7 @@ const router = createRouter({
         {
           path: 'comment',
           name: 'comment',
-          component: () => import('@/views/Comment/index.vue'),
+          component: () => import('@/views/Public/Comment/index.vue'),
           meta: {
             title: '留言',
           },
@@ -52,7 +52,7 @@ const router = createRouter({
         {
           path: 'friendlink',
           name: 'friendLink',
-          component: () => import('@/views/FriendLink/index.vue'),
+          component: () => import('@/views/Public/FriendLink/index.vue'),
           meta: {
             title: '友链',
           },
@@ -60,7 +60,7 @@ const router = createRouter({
         {
           path: 'about',
           name: 'about',
-          component: () => import('@/views/About/index.vue'),
+          component: () => import('@/views/Public/About/index.vue'),
           meta: {
             title: '关于',
           },
@@ -68,7 +68,7 @@ const router = createRouter({
         {
           path: 'waterfall',
           name: 'waterfall',
-          component: () => import('@/views/Waterfall/index.vue'),
+          component: () => import('@/views/Public/Waterfall/index.vue'),
           meta: {
             title: '瀑布',
           },
@@ -112,6 +112,14 @@ const router = createRouter({
             title: '处理文章',
           },
           props: (route) => ({ id: Number(route.query.id) }),
+        },
+        {
+          path: 'hero',
+          name: 'dashboard-hero',
+          component: () => import('@/views/Manager/Hero/index.vue'),
+          meta: {
+            title: '英雄图管理',
+          },
         },
         {
           path: 'note',
