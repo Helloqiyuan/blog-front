@@ -7,7 +7,7 @@ import type { Tips } from './types';
  */
 export const getRandomTips = (count: number) => {
   return http<Tips[]>({
-    url: '/tips/random',
+    url: '/common/tips/random',
     params: {
       count,
     },

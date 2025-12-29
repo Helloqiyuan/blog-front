@@ -4,6 +4,7 @@ import Banner from '@/components/Banner.vue';
 import { getAllNoteListApi } from '@/apis/NoteService';
 import type { Note } from '@/apis/NoteService/types';
 import { isWithin24Hours } from '@/utils/utils';
+import dayjs from '@/utils/dayjs';
 const noteList = ref<Note[]>([]);
 const getNoteList = async () => {
   const res = await getAllNoteListApi();
@@ -31,7 +32,9 @@ onMounted(() => {
             <img class="note-avatar" src="@/assets/images/img.jpg" alt="" />
             <div class="note-publisher-info">
               <h3 class="note-nickname">Helloqiyuan</h3>
-              <div class="note-create-time">{{ note.createTime }}</div>
+              <div class="note-create-time">
+                {{ note.createTime }} {{ dayjs(note.createTime).format('dddd') }}
+              </div>
             </div>
           </div>
           <div class="note-body">

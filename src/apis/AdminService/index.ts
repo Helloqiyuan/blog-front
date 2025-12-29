@@ -7,7 +7,7 @@ import type { LoginDTO, LoginVO } from './types';
  */
 export const loginApi = (loginDTO: LoginDTO) => {
   return http<LoginVO>({
-    url: '/admin/login',
+    url: '/common/admin/login',
     method: 'post',
     data: loginDTO,
   });

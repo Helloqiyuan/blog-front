@@ -27,7 +27,6 @@ const handleLogin = () => {
         // debugger;
         const res = await loginApi(form.value);
         if (res.data?.token) {
-          localStorage.setItem('adminToken', res.data.token);
           ElMessage.success('登录成功');
           adminStore.setAdminInfo(res.data);
           router.push('/dashboard');

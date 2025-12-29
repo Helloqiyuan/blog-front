@@ -6,7 +6,7 @@ import type { Photo, PhotoType } from './types';
  */
 export const getPhotoRandom = () => {
   return http<Photo>({
-    url: '/photo/random',
+    url: '/common/photo/random',
   });
 };
 /**
@@ -14,7 +14,7 @@ export const getPhotoRandom = () => {
  */
 export const getPhotoList = () => {
   return http<Photo[]>({
-    url: '/photo/all',
+    url: '/common/photo/all',
   });
 };
 /**
@@ -24,7 +24,7 @@ export const getPhotoList = () => {
  */
 export const getPhotoById = (id: number) => {
   return http<Photo>({
-    url: '/photo',
+    url: '/manager/photo',
     params: { id },
   });
 };
@@ -35,7 +35,7 @@ export const getPhotoById = (id: number) => {
  */
 export const addPhoto = (data: Photo) => {
   return http({
-    url: '/photo',
+    url: '/manager/photo',
     method: 'POST',
     data,
   });
@@ -47,7 +47,7 @@ export const addPhoto = (data: Photo) => {
  */
 export const updatePhoto = (data: Photo) => {
   return http({
-    url: '/photo',
+    url: '/manager/photo',
     method: 'PUT',
     data,
   });
@@ -59,7 +59,7 @@ export const updatePhoto = (data: Photo) => {
  */
 export const deletePhoto = (id: number) => {
   return http({
-    url: '/photo',
+    url: '/manager/photo',
     method: 'DELETE',
     params: { id },
   });
@@ -69,7 +69,7 @@ export const deletePhoto = (id: number) => {
  */
 export const getPhotoTypeList = () => {
   return http<PhotoType[]>({
-    url: '/photo/allType',
+    url: '/common/photo/allType',
   });
 };
 /**
@@ -77,7 +77,7 @@ export const getPhotoTypeList = () => {
  */
 export const getPhotoListByType = (typeId: number) => {
   return http<Photo[]>({
-    url: '/photo/type',
+    url: '/common/photo/type',
     params: { typeId },
   });
 };

@@ -1,7 +1,7 @@
 <template>
   <el-upload
     class="avatar-uploader"
-    action="/api/upload"
+    action="/api/common/upload"
     :headers="headers"
     drag
     :show-file-list="false"

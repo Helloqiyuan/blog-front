@@ -4,7 +4,7 @@ import type { FriendLink } from '@/apis/FriendLinkService/types';
 /** 获取所有友链 */
 export const getAllFriendLinkApi = () => {
   return http<FriendLink[]>({
-    url: '/friendLink/all',
+    url: '/manager/friendLink/all',
   });
 };
 /**
@@ -12,14 +12,14 @@ export const getAllFriendLinkApi = () => {
  */
 export const getEnableFriendLinkApi = () => {
   return http<FriendLink[]>({
-    url: '/friendLink/enable',
+    url: '/common/friendLink/enable',
   });
 };
 
 /** 根据 id 获取友链 */
 export const getFriendLinkByIdApi = (id: number) => {
   return http<FriendLink>({
-    url: '/friendLink',
+    url: '/common/friendLink',
     params: { id },
   });
 };
@@ -27,7 +27,7 @@ export const getFriendLinkByIdApi = (id: number) => {
 /** 添加友链 */
 export const insertFriendLinkApi = (friendLink: FriendLink) => {
   return http({
-    url: '/friendLink',
+    url: '/common/friendLink',
     method: 'post',
     data: friendLink,
   });
@@ -36,7 +36,7 @@ export const insertFriendLinkApi = (friendLink: FriendLink) => {
 /** 修改友链 */
 export const updateFriendLinkApi = (friendLink: FriendLink) => {
   return http({
-    url: '/friendLink',
+    url: '/manager/friendLink',
     method: 'put',
     data: friendLink,
   });
@@ -45,7 +45,7 @@ export const updateFriendLinkApi = (friendLink: FriendLink) => {
 /** 删除友链 */
 export const deleteFriendLinkApi = (id: number) => {
   return http({
-    url: '/friendLink',
+    url: '/manager/friendLink',
     method: 'delete',
     params: { id },
   });

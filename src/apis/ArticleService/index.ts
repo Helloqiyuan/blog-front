@@ -9,7 +9,7 @@ import type { PageQueryDTO } from '@/apis/ArticleService/types';
  */
 export const uploadArticleApi = (article: Article) => {
   return http<Article>({
-    url: '/article',
+    url: '/manager/article',
     method: 'post',
     data: article,
   });
@@ -21,7 +21,7 @@ export const uploadArticleApi = (article: Article) => {
  */
 export const updateArticleApi = (article: Article) => {
   return http<Article>({
-    url: '/article',
+    url: '/manager/article',
     method: 'put',
     data: article,
   });
@@ -34,7 +34,7 @@ export const updateArticleApi = (article: Article) => {
  */
 export const getArticleByIdApi = (id: number) => {
   return http<Article>({
-    url: `/article?id=${id}`,
+    url: `/common/article?id=${id}`,
   });
 };
 /**
@@ -44,7 +44,7 @@ export const getArticleByIdApi = (id: number) => {
  */
 export const ArticlePagequeryApi = (pageQuery: PageQueryDTO) => {
   return http<PageQueryVO>({
-    url: '/article/page',
+    url: '/common/article/page',
     params: pageQuery,
   });
 };
@@ -55,7 +55,7 @@ export const ArticlePagequeryApi = (pageQuery: PageQueryDTO) => {
  */
 export const deleteArticleByIdApi = (id: number) => {
   return http({
-    url: `/article?id=${id}`,
+    url: `/manager/article?id=${id}`,
     method: 'delete',
   });
 };

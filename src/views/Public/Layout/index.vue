@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import LayoutAside from './components/LayoutAside.vue';
+import LoginDialog from './components/LoginDialog.vue';
 const topRef = ref<HTMLDivElement | null>(null);
 window.addEventListener('scroll', () => {
   if (window.scrollY > 300) {
@@ -15,11 +16,16 @@ const handleToTop = () => {
     behavior: 'smooth',
   });
 };
+const dialogVisible = ref(false);
+const showDialog = () => {
+  dialogVisible.value = true;
+};
 </script>
 
 <template>
   <div class="content">
-    <LayoutAside class="aside" />
+    <LayoutAside class="aside" @open-login-dialog="showDialog" />
+    <LoginDialog v-model="dialogVisible" />
     <RouterView />
     <div class="scroll-to-top hiden" @click="handleToTop" ref="topRef">
       <span>顶部</span>
@@ -37,6 +43,11 @@ const handleToTop = () => {
     display: block;
     min-width: 250px;
   }
+}
+.btn {
+  position: fixed;
+  left: 50px;
+  top: 100px;
 }
 
 .aside {

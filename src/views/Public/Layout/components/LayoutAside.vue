@@ -21,13 +21,14 @@ const menuItems = [
   { id: 'about', label: '关于', icon: Monitor },
   { id: 'dashboard', label: '登录', icon: User },
 ];
+const emit = defineEmits(['openLoginDialog']);
 </script>
 
 <template>
   <aside class="layout-aside">
     <!-- 用户头像 -->
     <div class="user-avatar">
-      <div class="avatar-placeholder"></div>
+      <div class="avatar-placeholder" @click="emit('openLoginDialog')"></div>
     </div>
 
     <!-- 导航菜单 -->
@@ -71,10 +72,20 @@ const menuItems = [
 
   .avatar-placeholder {
     height: 60px;
+    width: 60px;
+    margin: 0 auto;
+    background-color: #e99f6e;
+    border-radius: 50%;
     background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url('@/assets/images/avatar.png');
+    background-size: 60%;
+    background-image: url('@/assets/user.svg');
     background-position: center;
+    box-shadow: $boxShadow;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      box-shadow: $boxShadowHover;
+    }
   }
 }
 

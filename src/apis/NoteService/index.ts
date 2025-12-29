@@ -6,7 +6,7 @@ import type { Note, NoteType, PageQueryDTO, PageQueryVO } from './types';
  */
 export const notePageQueryApi = (pageQueryDTO: PageQueryDTO) => {
   return http<PageQueryVO>({
-    url: '/note/page',
+    url: '/common/note/page',
     params: pageQueryDTO,
   });
 };
@@ -16,7 +16,7 @@ export const notePageQueryApi = (pageQueryDTO: PageQueryDTO) => {
  */
 export const getAllNoteListApi = () => {
   return http<Note[]>({
-    url: '/note/all',
+    url: '/common/note/all',
   });
 };
 /**
@@ -24,7 +24,7 @@ export const getAllNoteListApi = () => {
  */
 export const getNoteTypeListApi = () => {
   return http<NoteType[]>({
-    url: '/notetype/all',
+    url: '/common/notetype/all',
   });
 };
 /**
@@ -32,7 +32,7 @@ export const getNoteTypeListApi = () => {
  */
 export const getNoteByIdApi = (id: number) => {
   return http<Note>({
-    url: '/note',
+    url: '/common/note',
     params: { id },
   });
 };
@@ -41,7 +41,7 @@ export const getNoteByIdApi = (id: number) => {
  */
 export const addNoteApi = (note: Note) => {
   return http<Note>({
-    url: '/note',
+    url: '/manager/note',
     method: 'POST',
     data: note,
   });
@@ -51,7 +51,7 @@ export const addNoteApi = (note: Note) => {
  */
 export const editNoteApi = (note: Note) => {
   return http<Note>({
-    url: '/note',
+    url: '/manager/note',
     method: 'PUT',
     data: note,
   });
@@ -61,7 +61,7 @@ export const editNoteApi = (note: Note) => {
  */
 export const deleteNoteApi = (id: number) => {
   return http<Note>({
-    url: '/note',
+    url: '/manager/note',
     method: 'DELETE',
     params: { id },
   });

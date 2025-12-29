@@ -6,7 +6,7 @@ import http from '@/utils/request';
  */
 export const uploadFileApi = (file: File) => {
   return http({
-    url: '/upload',
+    url: '/common/upload',
     method: 'POST',
     data: {
       file,
