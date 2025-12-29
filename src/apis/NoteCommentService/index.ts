@@ -7,3 +7,13 @@ export const getNoteCommentByNoteIdApi = (noteId: number) => {
     params: { noteId },
   });
 };
+/**
+ * 添加评论
+ */
+export const addNoteCommentApi = (data: any) => {
+  return http({
+    url: '/user/noteComment',
+    method: 'POST',
+    data,
+  });
+};

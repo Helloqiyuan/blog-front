@@ -5,11 +5,14 @@ import { getAllNoteListApi } from '@/apis/NoteService';
 import type { Note } from '@/apis/NoteService/types';
 import { isWithin24Hours } from '@/utils/utils';
 import dayjs from '@/utils/dayjs';
+import Comment from './components/Comment.vue';
+
 const noteList = ref<Note[]>([]);
 const getNoteList = async () => {
   const res = await getAllNoteListApi();
   noteList.value = res.data;
 };
+
 onMounted(() => {
   getNoteList();
 });
@@ -23,11 +26,14 @@ onMounted(() => {
     </Banner>
     <div class="note-list">
       <div class="note-item" v-scale v-for="note in noteList" :key="note.id">
+        <!-- 导航线 -->
         <div class="aside">
           <img src="@/assets/circle.svg" class="bread-crumb" alt="circle" />
           <div class="line"></div>
         </div>
+        <!-- 主要内容 -->
         <div class="main">
+          <!-- 头像和名字 -->
           <div class="note-header">
             <img class="note-avatar" src="@/assets/images/img.jpg" alt="" />
             <div class="note-publisher-info">
@@ -37,6 +43,7 @@ onMounted(() => {
               </div>
             </div>
           </div>
+          <!-- 随笔标题和内容 -->
           <div class="note-body">
             <img
               v-if="isWithin24Hours(note.createTime as string)"
@@ -52,7 +59,10 @@ onMounted(() => {
               {{ note.content }}
             </div>
           </div>
+          <!-- 随笔的评论 -->
+          <Comment :noteId="note.id" class="comment" />
         </div>
+        <!-- 评论 -->
       </div>
     </div>
   </div>
@@ -148,6 +158,13 @@ onMounted(() => {
           margin-right: 10px;
         }
       }
+    }
+    .comment {
+      width: 100%;
+      height: max-content;
+      background-color: #fafafc;
+      margin-bottom: 50px;
+      padding: 20px;
     }
   }
 }

@@ -63,7 +63,7 @@ const handleLogin = () => {
         if (res.code === 1) {
           ElMessage.success('登录成功');
           userStore.setUserInfo(res.data);
-          emit('update:modelValue', false);
+          closeDialog();
           // 使用api清空表单
           loginFormRef.value.resetFields();
           window.location.reload();
@@ -169,15 +169,13 @@ const handleSendEmail = () => {
     }
   }, 1000);
 };
+const closeDialog = () => {
+  emit('update:modelValue', false);
+};
 </script>
 
 <template>
-  <el-dialog
-    :model-value="modelValue"
-    width="500"
-    @close="emit('update:modelValue', false)"
-    title="欢迎光临"
-  >
+  <el-dialog :model-value="modelValue" width="500" @close="closeDialog" title="欢迎光临">
     <el-tabs stretch v-model="currentSwitch" type="border-card">
       <el-tab-pane label="注册" name="register">
         <el-form
@@ -225,7 +223,7 @@ const handleSendEmail = () => {
               :loading="btnLoading"
               >注册</el-button
             >
-            <el-button>取消</el-button>
+            <el-button @click="closeDialog">取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -257,7 +255,7 @@ const handleSendEmail = () => {
               :loading="btnLoading"
               >登录</el-button
             >
-            <el-button>取消</el-button>
+            <el-button @click="closeDialog">取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>

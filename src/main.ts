@@ -15,6 +15,7 @@ import '@/styles/loading-mask.scss';
 import lazy from '@/directives/lazy';
 import trans from '@/directives/trans';
 import scale from '@/directives/scale';
+import rotate from '@/directives/rotate';
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -25,6 +26,7 @@ app.use(router);
 app.directive('lazy', lazy);
 app.directive('trans', trans);
 app.directive('scale', scale);
+app.directive('rotate', rotate);
 
 app.use(ElementPlus, {
   locale: zhCn,
