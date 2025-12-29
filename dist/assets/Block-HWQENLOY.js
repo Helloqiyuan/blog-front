@@ -1,1 +1,0 @@
-import{_ as r,c as n,a,N as o,o as c,n as s}from"./index-JbcahPOn.js";const l={},d={class:"block"};function _(t,e){return c(),n("div",d,[a("h1",null,[o(t.$slots,"title",{},()=>[e[0]||(e[0]=s("默认标题",-1))],!0)]),o(t.$slots,"content",{},()=>[e[1]||(e[1]=s("默认内容",-1))],!0)])}const f=r(l,[["render",_],["__scopeId","data-v-56ce8ec8"]]);export{f as B};

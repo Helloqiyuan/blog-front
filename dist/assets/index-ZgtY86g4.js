@@ -1,1 +1,0 @@
-import{h as e}from"./request-BUaVHz46.js";const i=()=>e({url:"/friendLink/all"}),t=()=>e({url:"/friendLink/enable"}),d=n=>e({url:"/friendLink",params:{id:n}}),a=n=>e({url:"/friendLink",method:"post",data:n}),s=n=>e({url:"/friendLink",method:"put",data:n}),u=n=>e({url:"/friendLink",method:"delete",params:{id:n}});export{i as a,d as b,u as d,t as g,a as i,s as u};
