@@ -15,6 +15,7 @@ const commentForm = ref<NoteComment>({
   noteId: 0,
   userId: -1,
   parentCommentId: 0,
+  rootCommentId: 0,
   content: '',
 });
 /**
@@ -32,10 +33,12 @@ const send = async () => {
         noteId: 0,
         userId: -1,
         parentCommentId: 0,
+        rootCommentId: 0,
         content: '',
       };
       ElMessage.success('评论发送成功');
-      window.location.reload();
+      // window.location.reload();
+      getCommentData();
     } else {
       ElMessage.error(res.message || '评论发送失败，请稍后重试');
     }
@@ -43,20 +46,25 @@ const send = async () => {
     ElMessage.error(error || '评论发送失败，请稍后重试');
   }
 };
-onMounted(async () => {
+const getCommentData = async () => {
   const res = await getNoteCommentByNoteIdApi(props.noteId);
   commentTree.value = res.data.children;
+};
+onMounted(() => {
+  getCommentData();
 });
 </script>
 
 <template>
   <div class="comment">
     <h3>评论</h3>
-    <CommentTree v-if="commentTree.length" :nodes="commentTree" />
-    <div class="none" v-else>
+    <div class="none">
       <div class="reply" @click="showInput = !showInput">
         <img class="avatar" src="@/assets/reply.svg" />
-        <span style="user-select: none">回复</span>
+        <span style="user-select: none">
+          <span v-if="showInput">点击收起评论框</span>
+          <span v-else>回复</span>
+        </span>
       </div>
       <div class="input" v-if="showInput">
         <el-input
@@ -67,8 +75,9 @@ onMounted(async () => {
         />
         <el-button type="primary" @click="send">发送</el-button>
       </div>
-      <div class="empty">暂无评论</div>
     </div>
+    <CommentTree v-if="commentTree.length" :nodes="commentTree" @update="getCommentData" />
+    <div v-else class="empty">暂无评论</div>
   </div>
 </template>
 

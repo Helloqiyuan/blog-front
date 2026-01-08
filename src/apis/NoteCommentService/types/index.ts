@@ -7,6 +7,7 @@ export interface NoteComment {
   noteId: number;
   userId: number;
   parentCommentId: number;
+  rootCommentId: number;
   content: string;
   like?: number;
   updateTime?: string;

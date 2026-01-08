@@ -2,9 +2,9 @@
 import type { NoteComment, CommentNode } from '@/apis/NoteCommentService/types';
 import { ref } from 'vue';
 import { DistantFromNowAndDate } from '@/utils/utils';
-import { addNoteCommentApi } from '@/apis/NoteCommentService';
+import { addNoteCommentApi, getByIdApi, deleteNoteCommentApi } from '@/apis/NoteCommentService';
 import useUserStore from '@/stores/user';
-import { ElMessage } from 'element-plus';
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 👇 递归组件必须有 name
 defineOptions({
@@ -12,6 +12,7 @@ defineOptions({
 });
 const props = defineProps<Props>();
 const userStore = useUserStore();
+const emit = defineEmits(['update']);
 
 interface Props {
   nodes: CommentNode<NoteComment>[];
@@ -24,6 +25,7 @@ const commentForm = ref<NoteComment>({
   noteId: 0,
   userId: -1,
   parentCommentId: 0,
+  rootCommentId: 0,
   content: '',
 });
 /**
@@ -36,16 +38,20 @@ const send = async (noteId: number, parentCommentId: number) => {
     commentForm.value.noteId = noteId;
     commentForm.value.userId = userStore.getUserInfo()?.id as number;
     commentForm.value.parentCommentId = parentCommentId;
+    const parentNode = await getByIdApi(parentCommentId);
+    commentForm.value.rootCommentId = parentNode.data.rootCommentId;
     const res = await addNoteCommentApi(commentForm.value);
     if (res.code === 1) {
       commentForm.value = {
         noteId: 0,
         userId: -1,
         parentCommentId: 0,
+        rootCommentId: 0,
         content: '',
       };
       ElMessage.success('评论发送成功');
-      window.location.reload();
+      // window.location.reload();
+      flashComments();
     } else {
       ElMessage.error(res.message || '评论发送失败，请稍后重试');
     }
@@ -53,8 +59,32 @@ const send = async (noteId: number, parentCommentId: number) => {
     ElMessage.error(error || '评论发送失败，请稍后重试');
   }
 };
-const deleteComment = async () => {
-  ElMessage.info('正在开发中...');
+const deleteComment = (id: number) => {
+  ElMessageBox.confirm('确认删除该评论及其回复吗？删除后该评论将无法恢复，请谨慎操作。', '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  })
+    .then(async () => {
+      try {
+        const res = await deleteNoteCommentApi(id);
+        if (res.code === 1) {
+          ElMessage.success('评论删除成功');
+          // window.location.reload();
+          flashComments();
+        } else {
+          ElMessage.error(res.message || '评论删除失败，请稍后重试');
+        }
+      } catch (error) {
+        ElMessage.error(error || '评论删除失败，请稍后重试');
+      }
+    })
+    .catch(() => {
+      // 取消删除
+    });
+};
+const flashComments = () => {
+  emit('update');
 };
 </script>
 
@@ -69,7 +99,7 @@ const deleteComment = async () => {
           <el-button
             type="warning"
             v-if="node.e.userId === userStore.getUserInfo()?.id"
-            @click="deleteComment"
+            @click="deleteComment(node.e.id as number)"
             >删除</el-button
           >
         </div>
@@ -80,7 +110,10 @@ const deleteComment = async () => {
           <!-- 左侧的回复区域 -->
           <div class="reply" @click="showInput[index] = !showInput[index]">
             <img class="avatar" src="@/assets/reply.svg" />
-            <span style="user-select: none">回复</span>
+            <span style="user-select: none">
+              <span v-if="showInput[index]">点击收起评论框</span>
+              <span v-else>回复</span></span
+            >
           </div>
           <!-- 右侧的展开回复按钮 -->
           <div
@@ -105,7 +138,7 @@ const deleteComment = async () => {
 
       <!-- 子评论 -->
       <div class="comment-children" v-if="node.children?.length && showReply[index]">
-        <CommentTree :nodes="node.children" />
+        <CommentTree :nodes="node.children" @update="flashComments" />
       </div>
     </div>
   </div>
