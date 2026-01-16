@@ -19,7 +19,7 @@ Instance.interceptors.request.use(
   (config) => {
     console.log('请求地址:', config.url);
     let token;
-    if (config.url?.startsWith('/admin')) {
+    if (config.url?.startsWith('/manager')) {
       token = adminStore.getAdminInfo()?.token;
     } else {
       token = userStore.getUserInfo()?.token;
@@ -52,7 +52,9 @@ Instance.interceptors.response.use(
   function (error) {
     console.log('请求结果:', error);
     if (error.status === 401) {
-      ElMessage.warning('登录已过期，请重新登录');
+      ElMessage.warning('服务器返回401：登录已过期，请重新登录');
+      adminStore.clearAdminInfo();
+      userStore.clearUserInfo();
       // router.replace({ path: '/login' });
     } else if (error.status === 500) {
       ElMessage.error('服务器异常，请联系管理员');

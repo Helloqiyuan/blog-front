@@ -173,7 +173,8 @@ router.beforeEach((to) => {
     return '/login';
   }
   if (Number(adminInfo.exp) < dayjs().valueOf()) {
-    ElMessage.warning('登录过期，请重新登录');
+    ElMessage.warning('router.beforeEach：登录过期，请重新登录');
+    adminStore.clearAdminInfo();
     return '/login';
   }
   return true;
