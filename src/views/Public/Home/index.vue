@@ -5,6 +5,8 @@ import type { Tips } from '@/apis/TipsService/types';
 import type { Photo } from '@/apis/HeroPhotoService/types';
 import { getRandomTips } from '@/apis/TipsService';
 import { getPhotoRandom } from '@/apis/HeroPhotoService';
+import { SolarDay } from 'tyme4ts';
+import dayjs from '@/utils/dayjs';
 // 个人作品数据
 const projects = ref([
   {
@@ -38,15 +40,6 @@ const projects = ref([
 const loading = ref(true);
 const heroImage = ref<Photo>();
 
-// 图片加载错误处理
-const handleImageError = (e: Event) => {
-  const target = e.target as HTMLImageElement;
-  // 设置默认占位图
-  target.src =
-    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPlx1NWYzZlx1NmM4NzwvdGV4dD48L3N2Zz4=';
-  target.style.opacity = '1';
-};
-
 // 热搜数据
 const hotSearchList = ref<Tips[]>([]);
 // 获取当前日期信息
@@ -60,12 +53,22 @@ const getCurrentDate = () => {
   const day = now.getDate();
 
   // 这里简化处理，实际应该计算农历
-  // const lunarInfo = '农历十月十一 乙巳年蛇';
+  // 计算农历信息
+  const d = dayjs();
+  const solar = SolarDay.fromYmd(
+    parseInt(d.format('YYYY')),
+    parseInt(d.format('MM')),
+    parseInt(d.format('DD')),
+  );
+  const lunar = solar.getLunarDay();
+  const monthGZ = lunar.getMonthSixtyCycle().toString();
+  const dayGZ = lunar.getSixtyCycle().toString();
 
   return {
     weekday,
-    date: `${year}年${month}月${day}日`,
-    // lunar: lunarInfo,
+    date: `${year}/${month}`,
+    day: day,
+    lunar: `${monthGZ}月 ${dayGZ}日`,
   };
 };
 
@@ -98,12 +101,14 @@ onMounted(async () => {
       <div class="hero-image">
         <!-- 图片占位，实际使用时替换为真实图片 -->
         <div class="hero-image-placeholder">
-          <img v-trans="heroImage?.url" alt="hero-image" @error="handleImageError" />
+          <img v-trans:src="heroImage?.url" alt="hero-image" />
         </div>
         <div class="hero-overlay">
           <div class="hero-content">
-            <h1 class="hero-weekday">{{ dateInfo.weekday }}</h1>
+            <p class="hero-lunar">{{ dateInfo.lunar }}</p>
+            <p class="weekday">{{ dateInfo.weekday }}</p>
             <p class="hero-date">{{ dateInfo.date }}</p>
+            <h1 class="day">{{ dateInfo.day }}</h1>
           </div>
         </div>
       </div>
@@ -200,29 +205,42 @@ onMounted(async () => {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  // right: 0;
+  // bottom: 0;
   // background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
   display: flex;
   align-items: flex-end;
   padding: 40px;
   box-sizing: border-box;
+  font-family: $fontFamily;
 }
 
 .hero-content {
   color: #fff;
 
-  .hero-weekday {
+  .day {
     font-family: serif;
     font-size: 48px;
     font-weight: bold;
-    margin: 0 0 10px 0;
+    // margin: 0 0 10px 0;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .hero-date {
+    font-size: 20px;
+    // margin: 10px 0 0 0;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .weekday {
+    font-size: 18px;
+    // margin: 5px 0 0 0;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  .hero-lunar {
     font-size: 16px;
-    margin: 0;
+    // margin: 4px 0;
     opacity: 0.9;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   }

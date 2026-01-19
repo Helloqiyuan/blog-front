@@ -24,6 +24,8 @@
     "nprogress": "^0.2.0",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
+    "tyme": "^2.0.2",
+    "tyme4ts": "^1.4.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
@@ -40,9 +42,23 @@
     "npm-run-all2": "^8.0.4",
     "prettier": "3.6.2",
     "sass-embedded": "^1.93.3",
+    "ts-node": "^10.9.2",
     "typescript": "~5.9.0",
     "vite": "^7.2.4",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.1.5"
-  }
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Helloqiyuan/blog-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Helloqiyuan/blog-front/issues"
+  },
+  "homepage": "https://github.com/Helloqiyuan/blog-front#readme"
 }
